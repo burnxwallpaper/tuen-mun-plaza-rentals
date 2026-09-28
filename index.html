@@ -35,7 +35,6 @@ img, .ph { width:100%; height:170px; object-fit:cover; background:#e7e5e4; displ
 .badge.src-28hse { background:#0f766e; }
 a.cardlink { color: inherit; text-decoration: none; }
 a.more, a.source { color:#9a3412; font-size:13px; }
-a.more .badge { margin: 0 2px; }
 .status { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; color: var(--muted); }
 </style>
 </head>
@@ -114,6 +113,20 @@ function badge(name) {
   return '<span class="badge' + (cls ? " " + cls : "") + '">' + esc(name) + "</span>";
 }
 
+function hostLabel(url, index) {
+  let host = "";
+  try {
+    host = new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    host = "";
+  }
+  if (host === "28hse.com" || host.endsWith(".28hse.com")) return "28hse.com";
+  if (host === "midland.com.hk" || host.endsWith(".midland.com.hk")) return "midland.com.hk";
+  if (host === "centanet.com" || host.endsWith(".centanet.com")) return "centanet.com";
+  if (host) return host;
+  return "連結 " + (index + 1);
+}
+
 function formatDay(iso) {
   if (!iso) return "";
   const date = new Date(iso);
@@ -162,13 +175,14 @@ function card(item) {
   const address = item.address && item.address !== item.title
     ? '<div class="address">' + esc(item.address) + "</div>"
     : "";
-  const extra = (item.also_listed || []).map(source =>
-    '<a class="more" href="' + esc(source.url) + '" target="_blank" rel="noopener">同時見於 ' +
-    badge(source.source_name) + " · " +
-    (source.rent_hkd ? ("HK$" + Number(source.rent_hkd).toLocaleString("zh-HK")) : "") +
-    "</a>"
-  ).join("");
-  const badges = sourcesOf(item).map(badge).join("");
+  const extra = (item.also_listed || []).map((source, index) => {
+    const rent = source.rent_hkd
+      ? (" · HK$" + Number(source.rent_hkd).toLocaleString("zh-HK"))
+      : "";
+    return '<a class="more" href="' + esc(source.url) + '" target="_blank" rel="noopener">同時見於 ' +
+      esc(hostLabel(source.url, index)) + rent + "</a>";
+  }).join("");
+  const badges = item.source_name ? badge(item.source_name) : "";
   const rent = item.rent_hkd
     ? ("HK$" + Number(item.rent_hkd).toLocaleString("zh-HK"))
     : "租金未列明";

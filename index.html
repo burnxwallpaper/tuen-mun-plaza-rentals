@@ -23,10 +23,14 @@ img, .ph { width:100%; height:170px; object-fit:cover; background:#e7e5e4; displ
 .room { color: var(--muted); }
 .title, .address { font-size: 15px; line-height: 1.35; }
 .address, .when { color: var(--muted); font-size: 13px; }
-.badges { display:flex; flex-wrap:wrap; gap:6px; }
-.badge { font-size:12px; border-radius:999px; padding:2px 8px; background:#f5f5f4; }
+.badges { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.badge { display:inline-block; font-size:12px; line-height:1.4; border-radius:999px; padding:2px 8px; color:#fff; background:#57534e; vertical-align:middle; }
+.badge.src-midland { background:#a16207; }
+.badge.src-centanet { background:#d0121a; }
+.badge.src-28hse { background:#0f766e; }
 a.cardlink { color: inherit; text-decoration: none; }
 a.more, a.source { color:#9a3412; font-size:13px; }
+a.more .badge { margin: 0 2px; }
 .status { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; color: var(--muted); }
 </style>
 </head>
@@ -60,6 +64,18 @@ function sourcesOf(item) {
   const names = [item.source_name];
   (item.also_listed || []).forEach(extra => names.push(extra.source_name));
   return names;
+}
+
+function sourceClass(name) {
+  if (name === "美聯物業" || name === "美聯" || name === "Midland") return "src-midland";
+  if (name === "中原地產" || name === "中原" || name === "Centaline") return "src-centanet";
+  if (name === "28Hse" || name === "28hse") return "src-28hse";
+  return "";
+}
+
+function badge(name) {
+  const cls = sourceClass(name);
+  return '<span class="badge' + (cls ? " " + cls : "") + '">' + esc(name) + "</span>";
 }
 
 function formatDay(iso) {
@@ -112,11 +128,11 @@ function card(item) {
     : "";
   const extra = (item.also_listed || []).map(source =>
     '<a class="more" href="' + esc(source.url) + '" target="_blank" rel="noopener">同時見於 ' +
-    esc(source.source_name) + " · " +
+    badge(source.source_name) + " · " +
     (source.rent_hkd ? ("HK$" + Number(source.rent_hkd).toLocaleString("zh-HK")) : "") +
     "</a>"
   ).join("");
-  const badges = sourcesOf(item).map(name => '<span class="badge">' + esc(name) + "</span>").join("");
+  const badges = sourcesOf(item).map(badge).join("");
   const rent = item.rent_hkd
     ? ("HK$" + Number(item.rent_hkd).toLocaleString("zh-HK"))
     : "租金未列明";

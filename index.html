@@ -11,9 +11,14 @@ body { margin:0; font-family: "Segoe UI", "PingFang HK", "Microsoft JhengHei", s
 header { padding: 28px 20px 8px; max-width: 1100px; margin: 0 auto; }
 h1 { margin: 0 0 6px; font-size: 28px; }
 .meta { color: var(--muted); margin: 0 0 14px; }
-.filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 8px; }
+.toolbar { display:flex; flex-direction:column; gap:10px; }
+.filters { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.rowlabel { color: var(--muted); font-size: 13px; }
+select.sort { border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; cursor:pointer; font: inherit; color: inherit; max-width:100%; }
 button { border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; cursor:pointer; font: inherit; }
 button.on { background:#1c1917; color:#fff; border-color:#1c1917; }
+.shown { color: var(--muted); font-size: 13px; margin: 0; }
+.empty { grid-column: 1 / -1; color: var(--muted); margin: 8px 0; }
 main { max-width: 1100px; margin: 0 auto; padding: 8px 20px 40px; display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
 article { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
 img, .ph { width:100%; height:170px; object-fit:cover; background:#e7e5e4; display:block; }
@@ -38,17 +43,48 @@ a.more .badge { margin: 0 2px; }
 <header>
   <h1>屯門市廣場 在租樓盤</h1>
   <p class="meta" id="meta">載入中…</p>
-  <div class="filters" id="filters"></div>
+  <div class="toolbar">
+    <div class="filters">
+      <span class="rowlabel">排序</span>
+      <select id="sort" class="sort" aria-label="排序">
+        <option value="updated_desc">更新時間（新→舊）</option>
+        <option value="updated_asc">更新時間（舊→新）</option>
+        <option value="published_desc">刊登時間（新→舊）</option>
+        <option value="published_asc">刊登時間（舊→新）</option>
+        <option value="rent_asc">租金（低→高）</option>
+        <option value="rent_desc">租金（高→低）</option>
+      </select>
+    </div>
+    <div class="filters" id="rooms"></div>
+    <div class="filters" id="filters"></div>
+    <p class="shown" id="shown"></p>
+  </div>
 </header>
 <p class="status" id="status" hidden></p>
 <main id="grid"></main>
 <script>
 const SOURCE_ORDER = ["28Hse", "美聯物業", "中原地產"];
+const ROOM_OPTIONS = [
+  { id: "all", label: "全部" },
+  { id: "studio", label: "開放式" },
+  { id: "1", label: "1房" },
+  { id: "2", label: "2房" },
+  { id: "3plus", label: "3房+" },
+  { id: "partition", label: "分間房" },
+  { id: "unknown", label: "未列明" }
+];
+const CN_ROOMS = { "一": 1, "二": 2, "兩": 2, "三": 3, "四": 4, "五": 5 };
 const metaEl = document.getElementById("meta");
 const grid = document.getElementById("grid");
+const roomsEl = document.getElementById("rooms");
 const filters = document.getElementById("filters");
+const sortEl = document.getElementById("sort");
+const shownEl = document.getElementById("shown");
 const statusEl = document.getElementById("status");
 let listings = [];
+let sourceFilter = "all";
+let roomFilter = "all";
+let sortKey = "updated_desc";
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, ch => ({
@@ -150,31 +186,148 @@ function card(item) {
     "</div></article>";
 }
 
-function render(source) {
-  const rows = listings.filter(item => source === "all" || sourcesOf(item).includes(source));
-  grid.innerHTML = rows.map(card).join("") || "<p>沒有樓盤</p>";
+function bedroomCount(item) {
+  if (typeof item.bedrooms === "number" && Number.isFinite(item.bedrooms)) return item.bedrooms;
+  const type = String(item.room_type || "");
+  const digit = type.match(/(\d+)\s*房/);
+  if (digit) return Number(digit[1]);
+  const word = type.match(/([一二兩三四五])房/);
+  if (word && CN_ROOMS[word[1]] != null) return CN_ROOMS[word[1]];
+  return null;
 }
 
-function buildFilters(payload) {
-  const counts = (payload.meta && payload.meta.source_counts) || {};
-  const names = SOURCE_ORDER.filter(name => counts[name] != null);
+function roomBucket(item) {
+  const type = String(item.room_type || "");
+  if (type.includes("分間")) return "partition";
+  if (type.includes("開放") || /studio/i.test(type) || item.bedrooms === 0) return "studio";
+  const beds = bedroomCount(item);
+  if (beds == null) return "unknown";
+  if (beds >= 3) return "3plus";
+  if (beds === 2) return "2";
+  if (beds === 1) return "1";
+  return "studio";
+}
+
+function matchesSource(item, source) {
+  return source === "all" || sourcesOf(item).includes(source);
+}
+
+function matchesRoom(item, room) {
+  return room === "all" || roomBucket(item) === room;
+}
+
+function timeValue(iso) {
+  if (!iso) return null;
+  const time = Date.parse(iso);
+  return Number.isNaN(time) ? null : time;
+}
+
+function sortValue(item) {
+  if (sortKey.startsWith("updated")) return timeValue(item.updated_at);
+  if (sortKey.startsWith("published")) return timeValue(item.published_at);
+  if (item.rent_hkd == null || item.rent_hkd === "") return null;
+  const rent = Number(item.rent_hkd);
+  return Number.isFinite(rent) ? rent : null;
+}
+
+function compareMissingLast(left, right) {
+  const leftMissing = left == null;
+  const rightMissing = right == null;
+  if (leftMissing || rightMissing) {
+    if (leftMissing && rightMissing) return 0;
+    return leftMissing ? 1 : -1;
+  }
+  if (left === right) return 0;
+  const ascending = sortKey.endsWith("_asc");
+  return ascending ? left - right : right - left;
+}
+
+function visibleListings() {
+  return listings
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => matchesSource(item, sourceFilter) && matchesRoom(item, roomFilter))
+    .sort((left, right) => {
+      const diff = compareMissingLast(sortValue(left.item), sortValue(right.item));
+      return diff || left.index - right.index;
+    })
+    .map(({ item }) => item);
+}
+
+function optionButtons(options, attr, selected) {
+  return options.map(option =>
+    '<button type="button" data-' + attr + '="' + esc(option.id) + '"' +
+    (option.id === selected ? ' class="on"' : "") + ">" +
+    esc(option.label) + " " + option.count + "</button>"
+  ).join("");
+}
+
+function buildRoomFilters() {
+  const pool = listings.filter(item => matchesSource(item, sourceFilter));
+  const counts = {};
+  pool.forEach(item => {
+    const bucket = roomBucket(item);
+    counts[bucket] = (counts[bucket] || 0) + 1;
+  });
+  const always = new Set(["all", "studio", "1", "2", "3plus", "partition"]);
+  const options = ROOM_OPTIONS.filter(option =>
+    always.has(option.id) || option.id === roomFilter || counts[option.id]
+  ).map(option => ({
+    id: option.id,
+    label: option.label,
+    count: option.id === "all" ? pool.length : (counts[option.id] || 0)
+  }));
+  roomsEl.innerHTML = '<span class="rowlabel">幾房</span>' + optionButtons(options, "room", roomFilter);
+}
+
+function buildSourceFilters() {
+  const pool = listings.filter(item => matchesRoom(item, roomFilter));
+  const counts = {};
+  pool.forEach(item => {
+    new Set(sourcesOf(item)).forEach(name => {
+      counts[name] = (counts[name] || 0) + 1;
+    });
+  });
+  const names = SOURCE_ORDER.filter(name => counts[name] || name === sourceFilter);
   Object.keys(counts).forEach(name => {
     if (!names.includes(name)) names.push(name);
   });
-  const buttons = [
-    '<button type="button" data-source="all" class="on">全部 ' + listings.length + "</button>"
-  ].concat(names.map(name =>
-    '<button type="button" data-source="' + esc(name) + '">' + esc(name) + " " + counts[name] + "</button>"
-  ));
-  filters.innerHTML = buttons.join("");
+  const options = [{ id: "all", label: "全部", count: pool.length }].concat(names.map(name => ({
+    id: name,
+    label: name,
+    count: counts[name] || 0
+  })));
+  filters.innerHTML = '<span class="rowlabel">來源</span>' + optionButtons(options, "source", sourceFilter);
 }
+
+function render() {
+  const rows = visibleListings();
+  grid.innerHTML = rows.map(card).join("") || '<p class="empty">沒有符合條件的樓盤</p>';
+  shownEl.textContent = "顯示 " + rows.length + " 個";
+}
+
+function refreshControls() {
+  buildRoomFilters();
+  buildSourceFilters();
+  render();
+}
+
+sortEl.addEventListener("change", () => {
+  sortKey = sortEl.value;
+  render();
+});
+
+roomsEl.addEventListener("click", event => {
+  const button = event.target.closest("button");
+  if (!button || !roomsEl.contains(button)) return;
+  roomFilter = button.dataset.room || "all";
+  refreshControls();
+});
 
 filters.addEventListener("click", event => {
   const button = event.target.closest("button");
-  if (!button) return;
-  filters.querySelectorAll("button").forEach(el => el.classList.remove("on"));
-  button.classList.add("on");
-  render(button.dataset.source || "all");
+  if (!button || !filters.contains(button)) return;
+  sourceFilter = button.dataset.source || "all";
+  refreshControls();
 });
 
 fetch("./data/listings.json")
@@ -189,8 +342,7 @@ fetch("./data/listings.json")
     metaEl.textContent = "共 " + listings.length + " 個卡片" +
       (updated ? " · 更新日期 " + updated + "（香港時間）" : "") +
       (meta.search_key ? " · 搜尋「" + meta.search_key + "」" : "");
-    buildFilters(payload);
-    render("all");
+    refreshControls();
   })
   .catch(error => {
     metaEl.textContent = "未能載入樓盤";

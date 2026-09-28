@@ -77,6 +77,66 @@ def money(value: int | None) -> str:
     return f"HK${value:,}"
 
 
+def normalize_dt(value: object) -> str | None:
+    """ISO datetime in Hong Kong time. Offset-less source values are treated as HKT."""
+    if not isinstance(value, str):
+        return None
+    raw = value.strip()
+    if not raw:
+        return None
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=HKT)
+    return parsed.astimezone(HKT).replace(microsecond=0).isoformat()
+
+
+def pick_bound(values: list[object], *, latest: bool) -> str | None:
+    present = [value for value in values if isinstance(value, str) and value]
+    if not present:
+        return None
+    return max(present) if latest else min(present)
+
+
+def dates_28hse(url: str) -> tuple[str | None, str | None]:
+    status, body, _ = fetch(url, headers={"Accept-Language": "zh-HK"})
+    if status != 200 or not body:
+        return None, None
+    text = body.decode("utf-8", "replace")
+    published = re.search(r'"datePublished"\s*:\s*"([^"]+)"', text)
+    updated = re.search(r'"dateModified"\s*:\s*"([^"]+)"', text)
+    return (
+        normalize_dt(published.group(1) if published else None),
+        normalize_dt(updated.group(1) if updated else None),
+    )
+
+
+def published_at_midland(url: str) -> str | None:
+    status, body, _ = fetch(url, headers={"Accept-Language": "zh-HK"})
+    if status != 200 or not body:
+        return None
+    text = body.decode("utf-8", "replace")
+    match = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', text)
+    if not match:
+        return None
+    try:
+        payload = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return None
+    props = payload.get("props")
+    if not isinstance(props, dict):
+        return None
+    page_props = props.get("pageProps")
+    if not isinstance(page_props, dict):
+        return None
+    detail = page_props.get("propertyDetail")
+    if not isinstance(detail, dict):
+        return None
+    return normalize_dt(detail.get("first_pub_date"))
+
+
 def parse_28hse() -> list[dict]:
     status, body, _ = fetch("https://www.28hse.com/rent/a3/dg48/c4433")
     if status != 200:
@@ -110,6 +170,14 @@ def parse_28hse() -> list[dict]:
         if image.endswith("_thumb.jpg"):
             image = image.replace("_thumb.jpg", "_large.jpg")
         rent = int(rent_match.group(1).replace(",", "")) if rent_match else None
+        detail_url = url_match.group(1)
+        published_at = None
+        updated_at = None
+        try:
+            published_at, updated_at = dates_28hse(detail_url)
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            print(f"28hse date {url_match.group(2)}: {exc}", flush=True)
+        time.sleep(0.25)
         listings.append(
             {
                 "source": "28hse",
@@ -121,7 +189,9 @@ def parse_28hse() -> list[dict]:
                 "room_type": room,
                 "bedrooms": bedrooms,
                 "image_remote": image,
-                "url": url_match.group(1),
+                "url": detail_url,
+                "published_at": published_at,
+                "updated_at": updated_at,
                 "scraped_at": SCRAPED_AT,
             }
         )
@@ -204,6 +274,14 @@ def parse_midland() -> list[dict]:
             if not image:
                 image = row.get("outlook_wan_doc_path") or ""
             bedrooms = row.get("bedroom") if isinstance(row.get("bedroom"), int) else None
+            detail_url = row.get("url_desc") or ""
+            published_at = None
+            if detail_url:
+                try:
+                    published_at = published_at_midland(detail_url)
+                except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+                    print(f"midland date {row.get('serial_no')}: {exc}", flush=True)
+                time.sleep(0.2)
             listings.append(
                 {
                     "source": "midland",
@@ -215,10 +293,14 @@ def parse_midland() -> list[dict]:
                     "room_type": room_label(bedrooms),
                     "bedrooms": bedrooms,
                     "image_remote": image,
-                    "url": row.get("url_desc") or "",
+                    "url": detail_url,
+                    "published_at": published_at,
+                    "updated_at": normalize_dt(row.get("update_date")),
                     "scraped_at": SCRAPED_AT,
                 }
             )
+            if len(listings) % 10 == 0:
+                print(f"midland dates {len(listings)}", flush=True)
         if total is not None and page * 24 >= int(total):
             break
         page += 1
@@ -293,6 +375,8 @@ def parse_centanet() -> list[dict]:
                     "bedrooms": bedrooms,
                     "image_remote": image,
                     "url": detail,
+                    "published_at": normalize_dt(row.get("publishDate")),
+                    "updated_at": normalize_dt(row.get("updateDate")),
                     "scraped_at": SCRAPED_AT,
                 }
             )
@@ -339,6 +423,12 @@ def dedupe(listings: list[dict]) -> list[dict]:
             merged.extend(group)
             continue
         primary = dict(group[0])
+        primary["published_at"] = pick_bound(
+            [item.get("published_at") for item in group], latest=False
+        )
+        primary["updated_at"] = pick_bound(
+            [item.get("updated_at") for item in group], latest=True
+        )
         primary["also_listed"] = [
             {
                 "source": item["source"],
@@ -444,6 +534,11 @@ def main() -> None:
     cache_images(listings)
     write_data(listings)
     print(f"cards {len(listings)} errors {errors}")
+    for source in ("28hse", "midland", "centanet"):
+        rows = [item for item in listings if item.get("source") == source]
+        published = sum(1 for item in rows if item.get("published_at"))
+        updated = sum(1 for item in rows if item.get("updated_at"))
+        print(f"dates {source}: {published} published_at, {updated} updated_at, {len(rows)} cards")
 
 
 if __name__ == "__main__":

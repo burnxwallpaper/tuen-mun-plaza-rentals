@@ -30,7 +30,9 @@ python -m http.server 8080
 
 每張卡有圖片、來源連結、租金（港元）、房型，以及來源名稱、標題／地址（有就顯示）。
 
-座數、樓層（高／中／低）、單位字母、房數都齊，而且租金相差不超過 15% 時，會併成一張卡並保留各來源連結。對不上的盤各自保留。
+每條樓盤另有 `published_at`（刊登日期）和 `updated_at`（更新日期），皆為香港時間 ISO。來源沒有該日期時為 `null`，卡片不顯示該行。`scraped_at` 仍是本次抓取時間。中原取搜尋結果的 `publishDate`／`updateDate`；美聯的 `updated_at` 取列表 `update_date`，`published_at` 取樓盤頁 `first_pub_date`；28Hse 取樓盤頁 JSON-LD 的 `datePublished`／`dateModified`。
+
+座數、樓層（高／中／低）、單位字母、房數都齊，而且租金相差不超過 15% 時，會併成一張卡並保留各來源連結。合併卡嘅刊登日取組內最早非空值，更新日取最晚非空值。對不上的盤各自保留。
 
 來源搜尋頁：
 

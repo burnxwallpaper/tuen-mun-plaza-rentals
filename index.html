@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>屯門市廣場 租盤</title>
+<style>
+:root { color-scheme: light; --ink:#1c1917; --muted:#57534e; --line:#e7e5e4; --bg:#faf7f2; --card:#fff; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Segoe UI", "PingFang HK", "Microsoft JhengHei", sans-serif; background:var(--bg); color:var(--ink); }
+header { padding: 28px 20px 8px; max-width: 1100px; margin: 0 auto; }
+h1 { margin: 0 0 6px; font-size: 28px; }
+.meta { color: var(--muted); margin: 0 0 14px; }
+.filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 8px; }
+button { border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; cursor:pointer; font: inherit; }
+button.on { background:#1c1917; color:#fff; border-color:#1c1917; }
+main { max-width: 1100px; margin: 0 auto; padding: 8px 20px 40px; display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+article { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+img, .ph { width:100%; height:170px; object-fit:cover; background:#e7e5e4; display:block; }
+.ph { display:flex; align-items:center; justify-content:center; color:var(--muted); }
+.body { padding: 12px 14px 14px; display:flex; flex-direction:column; gap:6px; flex:1; }
+.rent { font-size: 20px; font-weight: 700; }
+.room { color: var(--muted); }
+.title, .address { font-size: 15px; line-height: 1.35; }
+.address { color: var(--muted); font-size: 13px; }
+.badges { display:flex; flex-wrap:wrap; gap:6px; }
+.badge { font-size:12px; border-radius:999px; padding:2px 8px; background:#f5f5f4; }
+a.cardlink { color: inherit; text-decoration: none; }
+a.more, a.source { color:#9a3412; font-size:13px; }
+.status { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>屯門市廣場 在租樓盤</h1>
+  <p class="meta" id="meta">載入中…</p>
+  <div class="filters" id="filters"></div>
+</header>
+<p class="status" id="status" hidden></p>
+<main id="grid"></main>
+<script>
+const SOURCE_ORDER = ["28Hse", "美聯物業", "中原地產"];
+const metaEl = document.getElementById("meta");
+const grid = document.getElementById("grid");
+const filters = document.getElementById("filters");
+const statusEl = document.getElementById("status");
+let listings = [];
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[ch]));
+}
+
+function sourcesOf(item) {
+  const names = [item.source_name];
+  (item.also_listed || []).forEach(extra => names.push(extra.source_name));
+  return names;
+}
+
+function formatUpdated(iso) {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  const parts = new Intl.DateTimeFormat("zh-HK", {
+    timeZone: "Asia/Hong_Kong",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+  const pick = type => parts.find(part => part.type === type)?.value || "";
+  return pick("year") + "-" + pick("month") + "-" + pick("day") + " " + pick("hour") + ":" + pick("minute");
+}
+
+function card(item) {
+  const img = item.image
+    ? '<img src="' + esc(item.image) + '" alt="">'
+    : '<div class="ph">沒有圖片</div>';
+  const address = item.address && item.address !== item.title
+    ? '<div class="address">' + esc(item.address) + "</div>"
+    : "";
+  const extra = (item.also_listed || []).map(source =>
+    '<a class="more" href="' + esc(source.url) + '" target="_blank" rel="noopener">同時見於 ' +
+    esc(source.source_name) + " · " +
+    (source.rent_hkd ? ("HK$" + Number(source.rent_hkd).toLocaleString("zh-HK")) : "") +
+    "</a>"
+  ).join("");
+  const badges = sourcesOf(item).map(name => '<span class="badge">' + esc(name) + "</span>").join("");
+  const rent = item.rent_hkd
+    ? ("HK$" + Number(item.rent_hkd).toLocaleString("zh-HK"))
+    : "租金未列明";
+  return '<article data-sources="' + esc(sourcesOf(item).join("|")) + '">' +
+    '<a class="cardlink" href="' + esc(item.url) + '" target="_blank" rel="noopener">' + img + "</a>" +
+    '<div class="body"><div class="rent">' + rent + "</div>" +
+    '<div class="room">' + esc(item.room_type || "未列明") + "</div>" +
+    '<div class="title">' + esc(item.title || "") + "</div>" +
+    address +
+    '<div class="badges">' + badges + "</div>" +
+    '<a class="source" href="' + esc(item.url) + '" target="_blank" rel="noopener">來源連結</a>' +
+    extra +
+    "</div></article>";
+}
+
+function render(source) {
+  const rows = listings.filter(item => source === "all" || sourcesOf(item).includes(source));
+  grid.innerHTML = rows.map(card).join("") || "<p>沒有樓盤</p>";
+}
+
+function buildFilters(payload) {
+  const counts = (payload.meta && payload.meta.source_counts) || {};
+  const names = SOURCE_ORDER.filter(name => counts[name] != null);
+  Object.keys(counts).forEach(name => {
+    if (!names.includes(name)) names.push(name);
+  });
+  const buttons = [
+    '<button type="button" data-source="all" class="on">全部 ' + listings.length + "</button>"
+  ].concat(names.map(name =>
+    '<button type="button" data-source="' + esc(name) + '">' + esc(name) + " " + counts[name] + "</button>"
+  ));
+  filters.innerHTML = buttons.join("");
+}
+
+filters.addEventListener("click", event => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  filters.querySelectorAll("button").forEach(el => el.classList.remove("on"));
+  button.classList.add("on");
+  render(button.dataset.source || "all");
+});
+
+fetch("./data/listings.json")
+  .then(response => {
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return response.json();
+  })
+  .then(payload => {
+    listings = Array.isArray(payload.listings) ? payload.listings : [];
+    const meta = payload.meta || {};
+    const updated = formatUpdated(meta.updated_at);
+    metaEl.textContent = "共 " + listings.length + " 個卡片" +
+      (updated ? " · 更新日期 " + updated + "（香港時間）" : "") +
+      (meta.search_key ? " · 搜尋「" + meta.search_key + "」" : "");
+    buildFilters(payload);
+    render("all");
+  })
+  .catch(error => {
+    metaEl.textContent = "未能載入樓盤";
+    statusEl.hidden = false;
+    statusEl.textContent = "讀取 data/listings.json 失敗。請用 GitHub Pages 或本機靜態伺服器開啟（file:// 會擋住 fetch）。" +
+      (error && error.message ? " " + error.message : "");
+  });
+</script>
+</body>
+</html>

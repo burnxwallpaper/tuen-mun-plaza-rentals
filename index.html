@@ -18,6 +18,14 @@ select.sort { border:1px solid var(--line); background:#fff; border-radius:999px
 button { border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; cursor:pointer; font: inherit; }
 button.on { background:#1c1917; color:#fff; border-color:#1c1917; }
 .shown { color: var(--muted); font-size: 13px; margin: 0; }
+.medians { display:flex; flex-direction:column; gap:8px; }
+.medians .caption { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; }
+.medians .note { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.median-row { display:flex; flex-wrap:wrap; gap:8px; }
+.median { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:10px 14px; flex:1 1 240px; min-width:0; }
+.median .k { color: var(--muted); font-size: 13px; }
+.median .v { font-size: 18px; font-weight: 700; line-height: 1.35; margin-top: 2px; }
+.median .n { color: var(--muted); font-size: 12px; line-height: 1.4; margin-top: 2px; }
 .empty { grid-column: 1 / -1; color: var(--muted); margin: 8px 0; }
 main { max-width: 1100px; margin: 0 auto; padding: 8px 20px 40px; display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
 article { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
@@ -56,6 +64,7 @@ a.more, a.source { color:#9a3412; font-size:13px; }
     </div>
     <div class="filters" id="rooms"></div>
     <div class="filters" id="filters"></div>
+    <div class="medians" id="medians" hidden></div>
     <p class="shown" id="shown"></p>
   </div>
 </header>
@@ -79,11 +88,13 @@ const roomsEl = document.getElementById("rooms");
 const filters = document.getElementById("filters");
 const sortEl = document.getElementById("sort");
 const shownEl = document.getElementById("shown");
+const mediansEl = document.getElementById("medians");
 const statusEl = document.getElementById("status");
 let listings = [];
 let sourceFilter = "all";
 let roomFilter = "all";
 let sortKey = "updated_desc";
+let dataAsOf = null;
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, ch => ({
@@ -313,10 +324,86 @@ function buildSourceFilters() {
   filters.innerHTML = '<span class="rowlabel">來源</span>' + optionButtons(options, "source", sourceFilter);
 }
 
+function rentValue(item) {
+  if (item.rent_hkd == null || item.rent_hkd === "") return null;
+  const rent = Number(item.rent_hkd);
+  return Number.isFinite(rent) ? rent : null;
+}
+
+function medianOf(values) {
+  if (!values.length) return null;
+  const sorted = values.slice().sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  if (sorted.length % 2 === 1) return sorted[mid];
+  return (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+function money(value) {
+  const digits = Number.isInteger(value) ? 0 : 1;
+  return "HK$" + value.toLocaleString("zh-HK", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits
+  });
+}
+
+function medianLine(rents) {
+  const median = medianOf(rents);
+  if (median == null) return "中位數 —（0 個盤）";
+  return "中位數 " + money(median) + "（" + rents.length + " 個盤）";
+}
+
+function asOfDate() {
+  if (dataAsOf && !Number.isNaN(dataAsOf.getTime())) return dataAsOf;
+  return new Date();
+}
+
+function filterNote() {
+  const room = roomFilter === "all"
+    ? "全部房型"
+    : ((ROOM_OPTIONS.find(option => option.id === roomFilter) || {}).label || roomFilter);
+  const source = sourceFilter === "all" ? "全部來源" : sourceFilter;
+  return "跟住篩選：" + room + " · " + source + "。只計每張卡片嘅租金。";
+}
+
+function recentNote() {
+  const day = formatDay(asOfDate().toISOString());
+  if (dataAsOf && !Number.isNaN(dataAsOf.getTime())) {
+    return "以資料更新日期 " + day + " 計，最近 30 日有更新";
+  }
+  return "以而家 " + day + " 計，最近 30 日有更新";
+}
+
+function renderMedians() {
+  const cutoff = asOfDate().getTime() - 30 * 24 * 60 * 60 * 1000;
+  const allRents = [];
+  const recentRents = [];
+  listings.forEach(item => {
+    if (!matchesSource(item, sourceFilter) || !matchesRoom(item, roomFilter)) return;
+    const rent = rentValue(item);
+    if (rent == null) return;
+    allRents.push(rent);
+    const updated = timeValue(item.updated_at);
+    if (updated != null && updated >= cutoff) recentRents.push(rent);
+  });
+  mediansEl.hidden = false;
+  mediansEl.innerHTML =
+    '<p class="caption">租金中位數</p>' +
+    '<p class="note">' + esc(filterNote()) + "</p>" +
+    '<div class="median-row">' +
+      '<div class="median"><div class="k">最近一個月更新嘅盤</div>' +
+      '<div class="v">' + esc(medianLine(recentRents)) + "</div>" +
+      '<div class="n">' + esc(recentNote()) + "</div></div>" +
+      '<div class="median"><div class="k">全部</div>' +
+      '<div class="v">' + esc(medianLine(allRents)) + "</div>" +
+      '<div class="n">有租金嘅卡片</div></div>' +
+    "</div>";
+}
+
 function render() {
   const rows = visibleListings();
   grid.innerHTML = rows.map(card).join("") || '<p class="empty">沒有符合條件的樓盤</p>';
   shownEl.textContent = "顯示 " + rows.length + " 個";
+  renderMedians();
 }
 
 function refreshControls() {
@@ -352,6 +439,8 @@ fetch("./data/listings.json")
   .then(payload => {
     listings = Array.isArray(payload.listings) ? payload.listings : [];
     const meta = payload.meta || {};
+    const parsedAsOf = meta.updated_at ? new Date(meta.updated_at) : null;
+    dataAsOf = parsedAsOf && !Number.isNaN(parsedAsOf.getTime()) ? parsedAsOf : null;
     const updated = formatUpdated(meta.updated_at);
     metaEl.textContent = "共 " + listings.length + " 個卡片" +
       (updated ? " · 更新日期 " + updated + "（香港時間）" : "") +

@@ -1,17 +1,17 @@
 {
   "meta": {
-    "updated_at": "2026-10-16T16:45:02+08:00",
+    "updated_at": "2026-10-20T13:19:46+08:00",
     "search_key": "屯門市廣場",
-    "card_count": 141,
+    "card_count": 133,
     "source_counts": {
-      "28Hse": 11,
-      "中原地產": 79,
-      "美聯物業": 64
+      "中原地產": 76,
+      "美聯物業": 59,
+      "28Hse": 11
     },
     "primary_counts": {
-      "28Hse": 11,
-      "中原地產": 76,
-      "美聯物業": 54
+      "中原地產": 73,
+      "美聯物業": 49,
+      "28Hse": 11
     },
     "sources": [
       {
@@ -33,22 +33,6 @@
   },
   "listings": [
     {
-      "source": "28hse",
-      "source_name": "28Hse",
-      "listing_id": "3092871",
-      "title": "屯門市廣場，分間房放租，中高層企理。即走！",
-      "address": "6座 中層",
-      "rent_hkd": 3800,
-      "room_type": "分間房",
-      "bedrooms": null,
-      "image_remote": "https://i1.28hse.com/2026/09/202609201537464864340_large.jpg",
-      "url": "https://www.28hse.com/rent/apartment/property-3092871",
-      "published_at": "2026-10-15T14:02:22+08:00",
-      "updated_at": "2026-10-15T19:13:48+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/28hse-3092871.jpg"
-    },
-    {
       "source": "centanet",
       "source_name": "中原地產",
       "listing_id": "CIC447",
@@ -60,8 +44,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_fa9603e290be489995decd03d6962421/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIC447?theme=rent",
       "published_at": "2026-01-05T13:58:32+08:00",
-      "updated_at": "2026-10-13T15:40:49+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CIC447.jpg"
     },
     {
@@ -77,7 +61,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%BD%8E%E5%B1%A4H%E5%AE%A4-M300329601",
       "published_at": "2023-05-19T17:05:40+08:00",
       "updated_at": "2026-07-26T14:15:44+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300329601.jpg"
     },
     {
@@ -93,7 +77,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E9%AB%98%E5%B1%A4K%E5%AE%A4-M300802140",
       "published_at": "2021-03-27T18:05:25+08:00",
       "updated_at": "2026-07-27T16:10:55+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300802140.jpg"
     },
     {
@@ -109,7 +93,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%B8%AD%E5%B1%A4F%E5%AE%A4-M300090004",
       "published_at": "2017-07-29T20:26:22+08:00",
       "updated_at": "2026-07-24T20:51:15+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300090004.jpg"
     },
     {
@@ -125,7 +109,7 @@
       "url": "https://www.28hse.com/rent/apartment/property-4031776",
       "published_at": "2026-09-27T16:19:12+08:00",
       "updated_at": "2026-09-27T16:19:12+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4031776.jpg"
     },
     {
@@ -140,8 +124,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_d192a0c99040465887e0986b5036806c/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGP269?theme=rent",
       "published_at": "2025-03-16T17:45:56+08:00",
-      "updated_at": "2026-10-13T15:40:57+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGP269.jpg"
     },
     {
@@ -156,8 +140,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_6cf0d32e57f94c1b9d3c2ac97246d276/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFY960?theme=rent",
       "published_at": "2026-03-24T12:31:45+08:00",
-      "updated_at": "2026-10-16T14:15:48+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:55:28+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFY960.jpg"
     },
     {
@@ -172,8 +156,8 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/FA/03/D936BF424B91AEE11C9D1C385D31.jpg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFB142?theme=rent",
       "published_at": "2025-11-20T14:50:12+08:00",
-      "updated_at": "2026-10-16T13:42:45+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:18+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFB142.jpg"
     },
     {
@@ -189,7 +173,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%B8%AD%E5%B1%A4M%E5%AE%A4-M300156054",
       "published_at": "2018-10-16T16:00:08+08:00",
       "updated_at": "2026-07-27T18:43:27+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300156054.jpg"
     },
     {
@@ -205,7 +189,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%BD%8E%E5%B1%A4F%E5%AE%A4-M351793768",
       "published_at": "2026-04-24T13:01:24+08:00",
       "updated_at": "2026-08-02T17:13:07+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M351793768.jpg"
     },
     {
@@ -221,7 +205,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%B8%AD%E5%B1%A4L%E5%AE%A4-M300049552",
       "published_at": "2011-09-24T14:59:26+08:00",
       "updated_at": "2026-07-27T17:05:20+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300049552.jpg"
     },
     {
@@ -235,46 +219,10 @@
       "bedrooms": 2,
       "image_remote": "https://i1.28hse.com/2026/09/202609231623562345237_large.jpg",
       "url": "https://www.28hse.com/rent/apartment/property-4027223",
-      "published_at": "2026-04-09T11:00:34+08:00",
+      "published_at": "2026-09-23T16:26:51+08:00",
       "updated_at": "2026-10-04T01:25:32+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "also_listed": [
-        {
-          "source": "midland",
-          "source_name": "美聯物業",
-          "listing_id": "M300506533",
-          "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E9%AB%98%E5%B1%A4J%E5%AE%A4-M300506533",
-          "rent_hkd": 13500
-        }
-      ],
-      "dedupe_key": "4|高層|J|2",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4027223.jpg"
-    },
-    {
-      "source": "28hse",
-      "source_name": "28Hse",
-      "listing_id": "4018221",
-      "title": "Squarefoot 樓盤",
-      "address": "3座 中層 J室",
-      "rent_hkd": 11800,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://i1.28hse.com/2026/09/202609161753403579917_large.jpg",
-      "url": "https://www.28hse.com/rent/apartment/property-4018221",
-      "published_at": "2020-05-29T18:45:10+08:00",
-      "updated_at": "2026-10-16T13:23:27+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "also_listed": [
-        {
-          "source": "midland",
-          "source_name": "美聯物業",
-          "listing_id": "M300328510",
-          "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E4%B8%AD%E5%B1%A4J%E5%AE%A4-M300328510",
-          "rent_hkd": 13020
-        }
-      ],
-      "dedupe_key": "3|中層|J|2",
-      "image": "images/28hse-4018221.jpg"
     },
     {
       "source": "centanet",
@@ -288,9 +236,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_ff1a086900604e1d80f5391e1cef2d6b/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIB294?theme=rent",
       "published_at": "2026-06-04T20:03:27+08:00",
-      "updated_at": "2026-10-15T13:35:50+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:55:48+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CIB294.jpg"
+    },
+    {
+      "source": "midland",
+      "source_name": "美聯物業",
+      "listing_id": "M300324907",
+      "title": "屯門市廣場 2期 1座 低層 B室",
+      "address": "2期 1座 低層 B室",
+      "rent_hkd": 11800,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA3180676%2FH2701350_image_20260128190746874_9658cb0f117a5348e51f8c10fb310a5225568957.jpg",
+      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%BD%8E%E5%B1%A4B%E5%AE%A4-M300324907",
+      "published_at": "2020-05-21T18:21:18+08:00",
+      "updated_at": "2026-10-16T16:33:20+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/midland-M300324907.jpg"
     },
     {
       "source": "midland",
@@ -305,7 +269,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%BD%8E%E5%B1%A4G%E5%AE%A4-M350451064",
       "published_at": "2021-05-19T16:23:07+08:00",
       "updated_at": "2026-09-16T16:29:35+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M350451064.jpg"
     },
     {
@@ -321,7 +285,7 @@
       "url": "https://www.28hse.com/rent/apartment/property-4022941",
       "published_at": "2026-09-20T11:19:46+08:00",
       "updated_at": "2026-10-14T19:40:03+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4022941.jpg"
     },
     {
@@ -336,8 +300,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-48376_4e1741d6cebe486f9ffedd9c5e7fcb26/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGV782?theme=rent",
       "published_at": "2026-05-23T20:24:36+08:00",
-      "updated_at": "2026-10-15T17:29:13+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:57:24+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGV782.jpg"
     },
     {
@@ -352,8 +316,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-27801_03730f1729b148c7b71fac0b267d9288/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIJ497?theme=rent",
       "published_at": "2026-09-09T14:44:52+08:00",
-      "updated_at": "2026-10-16T13:43:00+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:24:07+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CIJ497.jpg"
     },
     {
@@ -368,25 +332,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-49545_2014f094a11544e6aa8f89100ee22897/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGV110?theme=rent",
       "published_at": "2026-07-05T23:01:48+08:00",
-      "updated_at": "2026-10-16T14:15:56+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:06:16+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGV110.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CER607",
-      "title": "屯門市廣場 2期 2座",
-      "address": "2期 2座 2房",
-      "rent_hkd": 12000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-27548_3191a43414b041f8becb7acaf4bbdaaa/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CER607?fromagent=27801&theme=rent",
-      "published_at": "2026-05-01T11:11:15+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CER607.jpg"
     },
     {
       "source": "centanet",
@@ -400,8 +348,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-40776_859007d804684403996b313d0beacacf/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFC474?theme=rent",
       "published_at": "2026-05-05T11:40:27+08:00",
-      "updated_at": "2026-10-15T16:20:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T10:34:56+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFC474.jpg"
     },
     {
@@ -416,8 +364,8 @@
       "image_remote": "https://hkais.centanet.com/Images/20240928/114823_c2e28a0e-4a00-402f-a954-1fb20bba9101.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CET625?theme=rent",
       "published_at": "2026-08-09T09:35:16+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:18+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CET625.jpg"
     },
     {
@@ -433,7 +381,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E4%B8%AD%E5%B1%A4H%E5%AE%A4-M351958789",
       "published_at": "2025-12-23T21:16:05+08:00",
       "updated_at": "2026-09-11T15:27:21+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M351958789.jpg"
     },
     {
@@ -449,7 +397,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E9%AB%98%E5%B1%A4F%E5%AE%A4-M300084376",
       "published_at": "2015-07-24T13:17:26+08:00",
       "updated_at": "2026-09-23T18:03:30+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300084376.jpg"
     },
     {
@@ -465,7 +413,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%B8%AD%E5%B1%A4A%E5%AE%A4-M301585420",
       "published_at": "2024-07-25T14:16:44+08:00",
       "updated_at": "2026-08-12T10:38:40+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301585420.jpg"
     },
     {
@@ -480,8 +428,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.ap-southeast-1.amazonaws.com%2Fstockphoto%2FAA2427078%2FH2701677_MEDIA_20260901155741857_3a3792d6-2dcb-44e0-aef8-ef844e557b49_44696167.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%B8%AD%E5%B1%A4A%E5%AE%A4-M300139077",
       "published_at": "2012-12-30T17:50:02+08:00",
-      "updated_at": "2026-09-09T18:02:36+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T14:34:08+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -506,8 +454,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM302992754%2Fmatterport%2F6c2eae721e86fe572167e0d241e916955c78bf8a.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%B8%AD%E5%B1%A4B%E5%AE%A4-M302992754",
       "published_at": "2022-06-27T14:20:19+08:00",
-      "updated_at": "2026-10-13T14:29:44+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T16:59:27+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "centanet",
@@ -532,8 +480,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM300371524%2F123%2F7d135caae3897a30169dca9b639d872e1cbb0334.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E9%AB%98%E5%B1%A4C%E5%AE%A4-M300371524",
       "published_at": "2020-12-05T20:29:00+08:00",
-      "updated_at": "2026-07-24T20:22:18+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-17T15:07:39+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300371524.jpg"
     },
     {
@@ -549,7 +497,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E9%AB%98%E5%B1%A4D%E5%AE%A4-M300067445",
       "published_at": "2010-03-19T19:26:53+08:00",
       "updated_at": "2026-07-26T18:42:26+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300067445.jpg"
     },
     {
@@ -564,9 +512,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_392114b290fb456688aa46b33ffbfc14/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFV848?theme=rent",
       "published_at": "2026-10-04T18:47:23+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:23:57+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFV848.jpg"
+    },
+    {
+      "source": "28hse",
+      "source_name": "28Hse",
+      "listing_id": "4062088",
+      "title": "屯門市中心~屯門市廣場 溫馨兩房出租 免佣 直接業主 可長短租 簡潔裝修",
+      "address": "1座 低層",
+      "rent_hkd": 12500,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://i1.28hse.com/2026/10/202610201243515062071_large.jpg",
+      "url": "https://www.28hse.com/rent/apartment/property-4062088",
+      "published_at": "2026-10-20T12:43:53+08:00",
+      "updated_at": "2026-10-20T12:43:53+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/28hse-4062088.jpg"
     },
     {
       "source": "28hse",
@@ -581,7 +545,7 @@
       "url": "https://www.28hse.com/rent/apartment/property-4043566",
       "published_at": "2026-10-06T15:51:51+08:00",
       "updated_at": "2026-10-06T15:51:51+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4043566.jpg"
     },
     {
@@ -596,8 +560,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-34221_0007456127e0437f998a7f3a65a5a7f9/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFY829?theme=rent",
       "published_at": "2026-07-13T15:24:26+08:00",
-      "updated_at": "2026-10-16T14:15:48+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:08:25+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFY829.jpg"
     },
     {
@@ -612,25 +576,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-49555_9ff3e12294e843b9964ef3cf5fb7e421/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEO154?theme=rent",
       "published_at": "2026-08-30T16:07:28+08:00",
-      "updated_at": "2026-10-11T12:50:38+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-17T11:46:52+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CEO154.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CEW210",
-      "title": "屯門市廣場 2期 1座",
-      "address": "2期 1座 2房",
-      "rent_hkd": 12500,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-49624_a05bae1649574878b1dca772dca997f3/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEW210?fromagent=48302&theme=rent",
-      "published_at": "2026-01-30T11:13:55+08:00",
-      "updated_at": "2026-10-04T20:00:10+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CEW210.jpg"
     },
     {
       "source": "centanet",
@@ -644,8 +592,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_ebce80c8f04540ec8c59cacb4b6a21c8/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGH466?theme=rent",
       "published_at": "2025-12-18T18:49:09+08:00",
-      "updated_at": "2026-10-15T15:59:05+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T18:10:37+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGH466.jpg"
     },
     {
@@ -661,7 +609,7 @@
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGR057?theme=rent",
       "published_at": "2025-10-31T13:58:51+08:00",
       "updated_at": "2026-10-13T17:27:30+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGR057.jpg"
     },
     {
@@ -676,25 +624,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-43013_4731af432a98441bb2bcca4302ea9685/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGY281?fromagent=29123&theme=rent",
       "published_at": "2026-04-09T10:30:56+08:00",
-      "updated_at": "2026-10-14T09:21:59+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T14:31:38+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGY281.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CET756",
-      "title": "屯門市廣場",
-      "address": "2房",
-      "rent_hkd": 12500,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-43013_072c328b905d467aaa8dd92c18b3637d/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CET756?theme=rent",
-      "published_at": "2025-12-07T17:21:52+08:00",
-      "updated_at": "2026-10-15T18:42:07+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CET756.jpg"
     },
     {
       "source": "centanet",
@@ -708,9 +640,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-49545_ba23f4b346884db08ed3c2ffc5ad4339/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGS766?theme=rent",
       "published_at": "2026-06-25T13:26:12+08:00",
-      "updated_at": "2026-10-16T14:15:56+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:40:14+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGS766.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CET756",
+      "title": "屯門市廣場",
+      "address": "2房",
+      "rent_hkd": 12500,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-43013_072c328b905d467aaa8dd92c18b3637d/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CET756?theme=rent",
+      "published_at": "2025-12-07T17:21:52+08:00",
+      "updated_at": "2026-10-19T17:58:59+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CET756.jpg"
     },
     {
       "source": "centanet",
@@ -724,8 +672,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-40776_395620147f824e0ea2503d1d3530e34d/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEX755?theme=rent",
       "published_at": "2026-07-24T11:03:12+08:00",
-      "updated_at": "2026-10-10T16:25:33+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:12:55+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CEX755.jpg"
     },
     {
@@ -740,8 +688,8 @@
       "image_remote": "https://hkais.centanet.com/Images/20260603/103643_9792ade5-9d47-4102-a617-66f02af3413e.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CHB857?theme=rent",
       "published_at": "2026-06-03T11:38:31+08:00",
-      "updated_at": "2026-10-15T09:52:10+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:40:14+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CHB857.jpg"
     },
     {
@@ -756,8 +704,8 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/B0/D3/B237964040309F6F1B0877049821.jpg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CER370?theme=rent",
       "published_at": "2025-12-17T23:24:17+08:00",
-      "updated_at": "2026-10-16T13:43:00+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T14:55:00+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CER370.jpg"
     },
     {
@@ -773,7 +721,7 @@
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CER415?fromagent=31867&theme=rent",
       "published_at": "2026-07-24T10:37:58+08:00",
       "updated_at": "2026-10-15T11:58:22+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CER415.jpg"
     },
     {
@@ -789,7 +737,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E9%AB%98%E5%B1%A4G%E5%AE%A4-M301268915",
       "published_at": "2021-07-26T00:00:00+08:00",
       "updated_at": "2026-08-23T14:23:40+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301268915.jpg"
     },
     {
@@ -805,7 +753,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%BD%8E%E5%B1%A4D%E5%AE%A4-M352034203",
       "published_at": "2026-07-23T12:55:46+08:00",
       "updated_at": "2026-07-28T16:19:44+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M352034203.jpg"
     },
     {
@@ -821,7 +769,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E9%AB%98%E5%B1%A4H%E5%AE%A4-M300468643",
       "published_at": "2018-11-02T16:48:02+08:00",
       "updated_at": "2026-07-25T13:04:13+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -846,8 +794,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA3475401%2FH1006510_image_20231001232456242_013972447.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E9%AB%98%E5%B1%A4B%E5%AE%A4-M300253757",
       "published_at": "2017-07-11T15:35:58+08:00",
-      "updated_at": "2026-10-16T13:43:00+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T16:48:00+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -879,25 +827,9 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM301695996%2F123%2Fb4ebe75ab31147ac7716cc287cf09c4f13776e42.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E9%AB%98%E5%B1%A4F%E5%AE%A4-M301695996",
       "published_at": "2022-03-13T19:36:14+08:00",
-      "updated_at": "2026-10-01T12:58:22+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T12:23:38+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301695996.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
-      "listing_id": "M300311693",
-      "title": "屯門市廣場 1期 4座 中層 B室",
-      "address": "1期 4座 中層 B室",
-      "rent_hkd": 12500,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM300311693%2Fmatterport%2Ffece313167d7cfd8a7b815829edd35d4dec99863.jpg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%B8%AD%E5%B1%A4B%E5%AE%A4-M300311693",
-      "published_at": "2020-03-19T17:15:30+08:00",
-      "updated_at": "2026-09-01T16:57:48+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M300311693.jpg"
     },
     {
       "source": "midland",
@@ -912,7 +844,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E9%AB%98%E5%B1%A4H%E5%AE%A4-M301013481",
       "published_at": "2021-08-07T17:02:01+08:00",
       "updated_at": "2026-07-26T15:01:31+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301013481.jpg"
     },
     {
@@ -928,7 +860,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%B8%AD%E5%B1%A4C%E5%AE%A4-M301585376",
       "published_at": "2026-05-23T21:54:10+08:00",
       "updated_at": "2026-10-03T13:50:34+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301585376.jpg"
     },
     {
@@ -943,8 +875,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA5402537%2FH2700785_image_20251227123752341_f4612aa8b82734829040df4c308590ee87297610.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%BD%8E%E5%B1%A4B%E5%AE%A4-M351966136",
       "published_at": "2018-04-14T15:26:28+08:00",
-      "updated_at": "2026-10-09T19:27:42+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T13:14:14+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -969,8 +901,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA1890678%2FH2408736_image_20251104104942918_e6aecca67055c5533e212e9c899326c711709482.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%B8%AD%E5%B1%A4B%E5%AE%A4-M300040813",
       "published_at": "2010-08-31T16:22:48+08:00",
-      "updated_at": "2026-07-25T13:50:26+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T13:05:29+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -996,7 +928,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F2%E5%BA%A7%E4%B8%AD%E5%B1%A4D%E5%AE%A4-M301585370",
       "published_at": "2025-12-19T19:47:12+08:00",
       "updated_at": "2026-07-25T14:09:43+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301585370.jpg"
     },
     {
@@ -1011,8 +943,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA3681407%2FH1923029_image_20241102181114564_166754188.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E9%AB%98%E5%B1%A4D%E5%AE%A4-M300871976",
       "published_at": "2021-06-19T13:21:16+08:00",
-      "updated_at": "2026-08-08T15:30:08+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T14:11:11+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300871976.jpg"
     },
     {
@@ -1024,11 +956,11 @@
       "rent_hkd": 12700,
       "room_type": "2房",
       "bedrooms": 2,
-      "image_remote": "https://hkais.centanet.com/Images/20240801/045320_8d0292af-ea85-49ea-a304-741786ee7da0.jpeg?d=1",
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-47462_138c13f2648744a4b6c21f617e768031/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFU974?theme=rent",
       "published_at": "2024-06-15T16:32:06+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:23:57+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFU974.jpg"
     },
     {
@@ -1044,7 +976,7 @@
       "url": "https://www.28hse.com/rent/apartment/property-4045960",
       "published_at": "2026-10-08T13:38:42+08:00",
       "updated_at": "2026-10-08T13:38:42+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4045960.jpg"
     },
     {
@@ -1059,25 +991,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-49545_ab5ace0ad9094e149c5a8456d6f3e0f3/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFT666?theme=rent",
       "published_at": "2026-08-14T11:28:54+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:23:57+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFT666.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CIM896",
-      "title": "屯門市廣場 1期 3座",
-      "address": "1期 3座 中層 2房",
-      "rent_hkd": 12800,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-40776_1651997a735445cfb9b829111f623099/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIM896?theme=rent",
-      "published_at": "2024-03-27T20:37:46+08:00",
-      "updated_at": "2026-10-15T16:15:05+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CIM896.jpg"
     },
     {
       "source": "centanet",
@@ -1091,8 +1007,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-40776_1a8e40115be9455fa8c49e768dce989e/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CHB428?theme=rent",
       "published_at": "2023-06-15T22:19:51+08:00",
-      "updated_at": "2026-10-15T11:58:13+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CHB428.jpg"
     },
     {
@@ -1107,9 +1023,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-49906_2bc8d849e4104b358ae4475c0e498bdd/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGY620?theme=rent",
       "published_at": "2026-09-23T12:04:42+08:00",
-      "updated_at": "2026-10-16T13:35:01+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:55:28+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGY620.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CIM896",
+      "title": "屯門市廣場 1期 3座",
+      "address": "1期 3座 中層 2房",
+      "rent_hkd": 12800,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-40776_1651997a735445cfb9b829111f623099/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIM896?theme=rent",
+      "published_at": "2024-03-27T20:37:46+08:00",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CIM896.jpg"
     },
     {
       "source": "midland",
@@ -1123,8 +1055,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.ap-southeast-1.amazonaws.com%2Fstockphoto%2FAA5493661%2FH2702435_MEDIA_20261001183452805_96e7197b-9d86-45f8-a5ee-5a8007c74eed_537660.png",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%B8%AD%E5%B1%A4C%E5%AE%A4-M352056250",
       "published_at": "2026-10-02T18:55:53+08:00",
-      "updated_at": "2026-10-09T18:01:04+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T21:34:16+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M352056250.jpg"
     },
     {
@@ -1139,8 +1071,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA3658729%2FH1703849_image_20241205175119537_034051568.JPG",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%BD%8E%E5%B1%A4C%E5%AE%A4-M300481657",
       "published_at": "2021-08-20T18:01:31+08:00",
-      "updated_at": "2026-10-06T15:29:08+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-17T14:51:08+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300481657.jpg"
     },
     {
@@ -1155,8 +1087,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-33411_ec81ff678be149efb2b2365d9c93ed7f/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFT470?theme=rent",
       "published_at": "2026-03-08T14:39:49+08:00",
-      "updated_at": "2026-10-16T11:26:40+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFT470.jpg"
     },
     {
@@ -1172,7 +1104,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E9%AB%98%E5%B1%A4L%E5%AE%A4-M351981960",
       "published_at": "2026-03-08T17:00:54+08:00",
       "updated_at": "2026-07-27T17:10:52+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M351981960.jpg"
     },
     {
@@ -1188,8 +1120,34 @@
       "url": "https://www.28hse.com/rent/apartment/property-4049383",
       "published_at": "2026-10-10T18:40:03+08:00",
       "updated_at": "2026-10-10T18:40:03+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4049383.jpg"
+    },
+    {
+      "source": "28hse",
+      "source_name": "28Hse",
+      "listing_id": "4061230",
+      "title": "大型商場市中心 兩房 已吉即租",
+      "address": "3座 中層 J室",
+      "rent_hkd": 13000,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://i1.28hse.com/2026/10/202610191627433674528_large.jpg",
+      "url": "https://www.28hse.com/rent/apartment/property-4061230",
+      "published_at": "2020-05-29T18:45:10+08:00",
+      "updated_at": "2026-10-19T16:28:54+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "also_listed": [
+        {
+          "source": "midland",
+          "source_name": "美聯物業",
+          "listing_id": "M300328510",
+          "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E4%B8%AD%E5%B1%A4J%E5%AE%A4-M300328510",
+          "rent_hkd": 13020
+        }
+      ],
+      "dedupe_key": "3|中層|J|2",
+      "image": "images/28hse-4061230.jpg"
     },
     {
       "source": "centanet",
@@ -1203,8 +1161,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-27801_b64d1501f8134b02a1a7f376dc40836f/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CET429?theme=rent",
       "published_at": "2026-08-22T16:46:17+08:00",
-      "updated_at": "2026-10-16T14:10:59+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:18+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CET429.jpg"
     },
     {
@@ -1219,25 +1177,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-37146_52fee10c7bb04c08af43253aff329d27/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEJ689?theme=rent",
       "published_at": "2026-09-16T15:18:49+08:00",
-      "updated_at": "2026-10-15T15:57:49+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T12:55:15+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CEJ689.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CFU289",
-      "title": "屯門市廣場 2期 2座",
-      "address": "2期 2座 2房",
-      "rent_hkd": 13000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-27801_23c8401f22e64286bf0c4c0562018686/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFU289?theme=rent",
-      "published_at": "2026-02-08T10:50:14+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CFU289.jpg"
     },
     {
       "source": "centanet",
@@ -1251,9 +1193,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-49921_fdcb6982a4bc4452bd09f7ddcde3eb3b/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGZ247?theme=rent",
       "published_at": "2026-09-20T20:12:40+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:08:25+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGZ247.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CFU289",
+      "title": "屯門市廣場 2期 2座",
+      "address": "2期 2座 2房",
+      "rent_hkd": 13000,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-27801_23c8401f22e64286bf0c4c0562018686/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFU289?theme=rent",
+      "published_at": "2026-02-08T10:50:14+08:00",
+      "updated_at": "2026-10-20T08:23:57+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CFU289.jpg"
     },
     {
       "source": "centanet",
@@ -1267,25 +1225,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-46711_d6edd5a4f1f141718548490eacdaafac/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFH767?theme=rent",
       "published_at": "2025-08-03T15:57:32+08:00",
-      "updated_at": "2026-10-14T15:34:21+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T12:57:55+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFH767.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CGZ191",
-      "title": "屯門市廣場 2期 1座",
-      "address": "2期 1座 1房",
-      "rent_hkd": 13000,
-      "room_type": "1房",
-      "bedrooms": 1,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-42951_554748e8dd8f45018e1dfaaa58f4db61/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGZ191?theme=rent",
-      "published_at": "2026-01-22T15:08:59+08:00",
-      "updated_at": "2026-10-16T11:26:40+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CGZ191.jpg"
     },
     {
       "source": "centanet",
@@ -1299,41 +1241,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-42951_c57e59a0a5cc4e29b85eee03098d034f/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGS821?theme=rent",
       "published_at": "2023-05-19T13:34:57+08:00",
-      "updated_at": "2026-10-13T17:27:30+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-17T11:46:52+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGS821.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CEO289",
-      "title": "屯門市廣場 3期 8座",
-      "address": "3期 8座 2房",
-      "rent_hkd": 13000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_6b1b280076de4909bc5de827f84b7c75/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEO289?theme=rent",
-      "published_at": "2025-10-19T10:31:03+08:00",
-      "updated_at": "2026-10-13T17:27:30+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CEO289.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CGS388",
-      "title": "屯門市廣場",
-      "address": "2房",
-      "rent_hkd": 13000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_7c8cdb132d184f699d40974091725dd2/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGS388?theme=rent",
-      "published_at": "2024-08-04T13:02:06+08:00",
-      "updated_at": "2026-10-16T14:15:56+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CGS388.jpg"
     },
     {
       "source": "centanet",
@@ -1347,9 +1257,41 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_097d8442b54d472488a6b73935208194/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CED185?theme=rent",
       "published_at": "2024-12-10T17:19:11+08:00",
-      "updated_at": "2026-10-15T10:29:40+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:56:22+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CED185.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CGS388",
+      "title": "屯門市廣場",
+      "address": "2房",
+      "rent_hkd": 13000,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_7c8cdb132d184f699d40974091725dd2/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGS388?theme=rent",
+      "published_at": "2024-08-04T13:02:06+08:00",
+      "updated_at": "2026-10-18T15:09:10+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CGS388.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CGZ191",
+      "title": "屯門市廣場 2期 1座",
+      "address": "2期 1座 1房",
+      "rent_hkd": 13000,
+      "room_type": "1房",
+      "bedrooms": 1,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-42951_554748e8dd8f45018e1dfaaa58f4db61/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGZ191?theme=rent",
+      "published_at": "2026-01-22T15:08:59+08:00",
+      "updated_at": "2026-10-19T12:33:45+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CGZ191.jpg"
     },
     {
       "source": "centanet",
@@ -1363,8 +1305,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47825_e6225f7ada0941399d866c93ec1cf6c3/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGF483?theme=rent",
       "published_at": "2026-07-24T11:02:49+08:00",
-      "updated_at": "2026-10-16T14:04:31+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:06:16+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGF483.jpg"
     },
     {
@@ -1379,8 +1321,8 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/BE/27/83230AF241F88A0B96E691438EC9.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGS634?theme=rent",
       "published_at": "2026-03-07T13:59:17+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T06:13:15+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGS634.jpg"
     },
     {
@@ -1395,8 +1337,8 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/C5/FE/035E94244450BE74354E9A7D1335.jpg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEF500?fromagent=47462&theme=rent",
       "published_at": "2026-08-22T13:43:31+08:00",
-      "updated_at": "2026-10-10T12:51:23+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T12:57:55+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CEF500.jpg"
     },
     {
@@ -1412,8 +1354,34 @@
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFU818?theme=rent",
       "published_at": "2025-11-23T18:03:17+08:00",
       "updated_at": "2026-10-13T14:18:47+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFU818.jpg"
+    },
+    {
+      "source": "midland",
+      "source_name": "美聯物業",
+      "listing_id": "M351793754",
+      "title": "屯門市廣場 1期 4座 中層 B室",
+      "address": "1期 4座 中層 B室",
+      "rent_hkd": 13000,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM351793754%2Fmatterport%2Fbc5f6f96957254cb0a8a976f06b7ac6a7e538198.jpg",
+      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%B8%AD%E5%B1%A4B%E5%AE%A4-M351793754",
+      "published_at": "2020-03-19T17:15:30+08:00",
+      "updated_at": "2026-10-19T17:42:22+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "also_listed": [
+        {
+          "source": "midland",
+          "source_name": "美聯物業",
+          "listing_id": "M300311693",
+          "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%B8%AD%E5%B1%A4B%E5%AE%A4-M300311693",
+          "rent_hkd": 12500
+        }
+      ],
+      "dedupe_key": "4|中層|B|2",
+      "image": "images/midland-M351793754.jpg"
     },
     {
       "source": "midland",
@@ -1428,7 +1396,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%BD%8E%E5%B1%A4E%E5%AE%A4-M352032643",
       "published_at": "2011-10-01T16:07:20+08:00",
       "updated_at": "2026-08-23T21:10:14+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -1444,38 +1412,6 @@
     {
       "source": "midland",
       "source_name": "美聯物業",
-      "listing_id": "M351811539",
-      "title": "屯門市廣場 2期 1座 高層 C室",
-      "address": "2期 1座 高層 C室",
-      "rent_hkd": 13000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA5245967%2FH2209616_image_20260713151300016_93ba27f652e285d5ad1870b9525e3ce145653708.jpeg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E9%AB%98%E5%B1%A4C%E5%AE%A4-M351811539",
-      "published_at": "2025-07-02T15:45:24+08:00",
-      "updated_at": "2026-07-20T19:22:56+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M351811539.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
-      "listing_id": "M351990871",
-      "title": "屯門市廣場 1期 3座 低層 K室",
-      "address": "1期 3座 低層 K室",
-      "rent_hkd": 13000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA5427402%2FH150374A_image_20260407143124670_829f18e897dd6e08a1a31397f85405b72204916.jpg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E4%BD%8E%E5%B1%A4K%E5%AE%A4-M351990871",
-      "published_at": "2026-04-07T15:02:40+08:00",
-      "updated_at": "2026-07-18T16:39:09+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M351990871.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
       "listing_id": "M300939209",
       "title": "屯門市廣場 3期 8座 高層 H室",
       "address": "3期 8座 高層 H室",
@@ -1486,24 +1422,8 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E9%AB%98%E5%B1%A4H%E5%AE%A4-M300939209",
       "published_at": "2025-11-23T17:39:57+08:00",
       "updated_at": "2026-07-27T14:31:35+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300939209.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
-      "listing_id": "M300247989",
-      "title": "屯門市廣場 1期 4座 高層 K室",
-      "address": "1期 4座 高層 K室",
-      "rent_hkd": 13000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA3107030%2FH210954A_image_20251201113308097_adececb535bdfec30dc3cb30a83085ce4866341.jpg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E9%AB%98%E5%B1%A4K%E5%AE%A4-M300247989",
-      "published_at": "2019-07-01T15:59:26+08:00",
-      "updated_at": "2026-07-19T18:55:23+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M300247989.jpg"
     },
     {
       "source": "centanet",
@@ -1517,8 +1437,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_a5e4cd75a0104aebb88135705ebee183/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGI382?theme=rent",
       "published_at": "2024-09-10T19:39:36+08:00",
-      "updated_at": "2026-10-16T14:15:56+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T18:11:21+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGI382.jpg"
     },
     {
@@ -1533,8 +1453,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-24084_dd9f86d12c0241deb6cb7d6b68c9b63e/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGB680?theme=rent",
       "published_at": "2024-07-05T10:00:36+08:00",
-      "updated_at": "2026-10-16T13:43:00+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:06:40+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGB680.jpg"
     },
     {
@@ -1543,14 +1463,14 @@
       "listing_id": "4036868",
       "title": "屯門市廣場 3座 高層",
       "address": "3座 高層",
-      "rent_hkd": 13500,
+      "rent_hkd": 13300,
       "room_type": "2房",
       "bedrooms": 2,
       "image_remote": "https://i1.28hse.com/2026/10/202610041926278779806_large.jpg",
       "url": "https://www.28hse.com/rent/apartment/property-4036868",
       "published_at": "2026-10-01T20:26:48+08:00",
-      "updated_at": "2026-10-04T19:27:17+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T08:40:31+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4036868.jpg"
     },
     {
@@ -1565,8 +1485,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-43013_7351ab5713024a19b01eda1aa4ba4556/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGQ787?theme=rent",
       "published_at": "2026-08-20T09:56:02+08:00",
-      "updated_at": "2026-10-16T14:15:56+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGQ787.jpg"
     },
     {
@@ -1581,9 +1501,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_ebde17fdddc847588714c51f97ca2c88/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFC373?theme=rent",
       "published_at": "2025-12-07T12:28:32+08:00",
-      "updated_at": "2026-10-16T13:43:00+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T16:48:00+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFC373.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CGR772",
+      "title": "屯門市廣場 2期 1座",
+      "address": "2期 1座 2房",
+      "rent_hkd": 13500,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_b643c71e134b44c3953bf12607158253/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGR772?theme=rent",
+      "published_at": "2026-06-28T18:53:35+08:00",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CGR772.jpg"
     },
     {
       "source": "centanet",
@@ -1597,8 +1533,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_3e9f321c307643be836da5e22b52ff07/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFD538?fromagent=29123&theme=rent",
       "published_at": "2026-01-27T11:43:49+08:00",
-      "updated_at": "2026-10-16T14:15:43+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T14:31:21+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFD538.jpg"
     },
     {
@@ -1613,25 +1549,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-20147_6a05b2a4fa8f4ffeb896a39535170add/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIH015?theme=rent",
       "published_at": "2026-07-24T10:40:44+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:24:07+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CIH015.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CEY729",
-      "title": "屯門市廣場 2期",
-      "address": "2期 2房",
-      "rent_hkd": 13500,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-47825_87b7640ff90c457cbce6b6191bfa55f4/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEY729?theme=rent",
-      "published_at": "2025-12-23T16:58:43+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CEY729.jpg"
     },
     {
       "source": "centanet",
@@ -1645,25 +1565,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-41645_aa330d9a27b9428eb0db73b8955d8e29/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFO259?theme=rent",
       "published_at": "2026-01-13T09:38:41+08:00",
-      "updated_at": "2026-10-16T14:15:48+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:26+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFO259.jpg"
     },
     {
       "source": "centanet",
       "source_name": "中原地產",
-      "listing_id": "CGR772",
-      "title": "屯門市廣場 2期 1座",
-      "address": "2期 1座 2房",
+      "listing_id": "CEY729",
+      "title": "屯門市廣場 2期",
+      "address": "2期 2房",
       "rent_hkd": 13500,
       "room_type": "2房",
       "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_b643c71e134b44c3953bf12607158253/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGR772?theme=rent",
-      "published_at": "2026-06-28T18:53:35+08:00",
-      "updated_at": "2026-10-15T12:57:28+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CGR772.jpg"
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-47825_87b7640ff90c457cbce6b6191bfa55f4/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEY729?theme=rent",
+      "published_at": "2025-12-23T16:58:43+08:00",
+      "updated_at": "2026-10-20T08:22:18+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CEY729.jpg"
     },
     {
       "source": "centanet",
@@ -1677,8 +1597,8 @@
       "image_remote": "https://hkcdn.centanet.com/imgresize/matterport/NXHSIHSXTTXS_e682ca33-6dbe-4ab9-89ee-8c9b99a6714a.jpg?d=0",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFS408?theme=rent",
       "published_at": "2024-07-26T16:11:42+08:00",
-      "updated_at": "2026-10-14T15:23:31+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T17:55:48+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFS408.jpg"
     },
     {
@@ -1693,8 +1613,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-29123_55ac249d303948d09b1acd4189c3cf59/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEA497?theme=rent",
       "published_at": "2025-05-05T10:12:34+08:00",
-      "updated_at": "2026-10-16T11:48:25+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:06:31+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CEA497.jpg"
     },
     {
@@ -1709,8 +1629,8 @@
       "image_remote": "https://hkais.centanet.com/Images/20260419/023814_ed6a5395-28ee-4d51-886f-7a31bb619e9e.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFB402?theme=rent",
       "published_at": "2026-04-19T16:16:50+08:00",
-      "updated_at": "2026-10-11T13:08:59+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T14:50:08+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFB402.jpg"
     },
     {
@@ -1726,7 +1646,7 @@
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIN974?theme=rent",
       "published_at": "2025-11-18T10:37:04+08:00",
       "updated_at": "2026-10-13T17:27:30+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CIN974.jpg"
     },
     {
@@ -1741,8 +1661,8 @@
       "image_remote": "https://hkais.centanet.com/Images/20241219/105826_035e3b7b-3ab2-4f14-b5e9-349c932de473.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGQ464?theme=rent",
       "published_at": "2025-10-24T16:19:55+08:00",
-      "updated_at": "2026-10-13T17:27:30+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T13:56:56+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGQ464.jpg"
     },
     {
@@ -1758,7 +1678,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%B8%AD%E5%B1%A4B%E5%AE%A4-M301585462",
       "published_at": "2026-09-20T20:04:21+08:00",
       "updated_at": "2026-10-10T16:28:11+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M301585462.jpg"
     },
     {
@@ -1774,7 +1694,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%BD%8E%E5%B1%A4D%E5%AE%A4-M352034250",
       "published_at": "2026-07-23T15:49:43+08:00",
       "updated_at": "2026-08-04T19:28:40+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M352034250.jpg"
     },
     {
@@ -1790,7 +1710,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E9%AB%98%E5%B1%A4H%E5%AE%A4-M300128399",
       "published_at": "2018-03-04T19:26:47+08:00",
       "updated_at": "2026-08-03T14:09:45+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300128399.jpg"
     },
     {
@@ -1806,7 +1726,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%B8%AD%E5%B1%A4K%E5%AE%A4-M300104565",
       "published_at": "2017-02-20T17:21:00+08:00",
       "updated_at": "2026-08-03T12:38:34+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300104565.jpg"
     },
     {
@@ -1822,24 +1742,8 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%B8%AD%E5%B1%A4M%E5%AE%A4-M351987352",
       "published_at": "2026-03-31T14:00:51+08:00",
       "updated_at": "2026-08-12T10:40:52+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M351987352.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
-      "listing_id": "M351978019",
-      "title": "屯門市廣場 1期 3座 中層 F室",
-      "address": "1期 3座 中層 F室",
-      "rent_hkd": 13500,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA5414510%2FH2407111_image_20260220204207458_75ff8a29ef7be3dab1b680d412871fa149433772.jpg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E4%B8%AD%E5%B1%A4F%E5%AE%A4-M351978019",
-      "published_at": "2026-02-22T18:58:35+08:00",
-      "updated_at": "2026-07-18T13:28:32+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M351978019.jpg"
     },
     {
       "source": "midland",
@@ -1854,7 +1758,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%B8%AD%E5%B1%A4G%E5%AE%A4-M300046875",
       "published_at": "2011-06-03T20:24:51+08:00",
       "updated_at": "2026-07-24T21:13:45+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -1879,8 +1783,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA5089874%2FH222065A_image_20260808131856460_00fb7dcbf9278412af6961c66a347abb31774866.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B42%E6%9C%9F1%E5%BA%A7%E4%B8%AD%E5%B1%A4A%E5%AE%A4-M351229685",
       "published_at": "2026-08-08T13:19:51+08:00",
-      "updated_at": "2026-09-16T16:24:44+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T14:04:16+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M351229685.jpg"
     },
     {
@@ -1896,7 +1800,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E9%AB%98%E5%B1%A4B%E5%AE%A4-M300148024",
       "published_at": "2018-08-25T20:43:26+08:00",
       "updated_at": "2026-07-26T18:01:23+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300148024.jpg"
     },
     {
@@ -1912,7 +1816,7 @@
       "url": "https://www.28hse.com/rent/apartment/property-4052427",
       "published_at": "2026-10-13T12:30:54+08:00",
       "updated_at": "2026-10-13T12:44:51+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/28hse-4052427.jpg"
     },
     {
@@ -1927,8 +1831,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-42951_9a04554e30b44b108bed81c7f5c5b925/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CED229?theme=rent",
       "published_at": "2026-10-06T17:18:46+08:00",
-      "updated_at": "2026-10-15T15:57:49+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T10:34:39+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CED229.jpg"
     },
     {
@@ -1943,8 +1847,8 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/1E/1A/D3D8CDBA44FAB3A038DE44E09CF3.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFM686?theme=rent",
       "published_at": "2026-09-03T11:57:52+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:26+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFM686.jpg"
     },
     {
@@ -1960,7 +1864,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E9%AB%98%E5%B1%A4F%E5%AE%A4-M300358208",
       "published_at": "2020-09-05T14:42:25+08:00",
       "updated_at": "2026-08-10T13:27:08+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300358208.jpg"
     },
     {
@@ -1976,7 +1880,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B43%E6%9C%9F8%E5%BA%A7%E4%B8%AD%E5%B1%A4H%E5%AE%A4-M302190404",
       "published_at": "2024-11-15T16:53:54+08:00",
       "updated_at": "2026-09-28T15:33:51+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M302190404.jpg"
     },
     {
@@ -1991,25 +1895,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_bf4b74b35e9241b6ae726824f081374c/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFT937?theme=rent",
       "published_at": "2026-01-22T09:56:02+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:23:57+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFT937.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CEM689",
-      "title": "屯門市廣場 3期 8座",
-      "address": "3期 8座 2房",
-      "rent_hkd": 14000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-34221_183ca5d94e4e43fb80baac8df5df454f/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEM689?theme=rent",
-      "published_at": "2023-07-30T12:18:16+08:00",
-      "updated_at": "2026-10-16T11:48:25+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CEM689.jpg"
     },
     {
       "source": "centanet",
@@ -2023,25 +1911,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-44194_7bb62d27d19145129ed6ebf818fb4062/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGG740?theme=rent",
       "published_at": "2026-08-11T16:53:31+08:00",
-      "updated_at": "2026-10-16T14:04:31+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T12:03:41+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGG740.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CGI808",
-      "title": "屯門市廣場 1期 3座",
-      "address": "1期 3座 中層 2房",
-      "rent_hkd": 14000,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkvrdata.centanet.com/CNHK-29123_1d563ef9841e494084657f5e097d1e54/CoverImage/Cover.jpg?x-oss-process=style/master",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGI808?theme=rent",
-      "published_at": "2026-01-05T14:17:38+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CGI808.jpg"
     },
     {
       "source": "centanet",
@@ -2055,9 +1927,41 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_3a524112d7ea4f79bffdebb0d0248d70/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFO496?theme=rent",
       "published_at": "2026-08-24T17:18:34+08:00",
-      "updated_at": "2026-10-16T13:43:00+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:12:55+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFO496.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CGI808",
+      "title": "屯門市廣場 1期 3座",
+      "address": "1期 3座 中層 2房",
+      "rent_hkd": 14000,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-29123_1d563ef9841e494084657f5e097d1e54/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGI808?theme=rent",
+      "published_at": "2026-01-05T14:17:38+08:00",
+      "updated_at": "2026-10-19T17:56:22+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CGI808.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CEM689",
+      "title": "屯門市廣場 3期 8座",
+      "address": "3期 8座 2房",
+      "rent_hkd": 14000,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkvrdata.centanet.com/CNHK-34221_183ca5d94e4e43fb80baac8df5df454f/CoverImage/Cover.jpg?x-oss-process=style/master",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEM689?theme=rent",
+      "published_at": "2023-07-30T12:18:16+08:00",
+      "updated_at": "2026-10-19T12:12:55+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CEM689.jpg"
     },
     {
       "source": "midland",
@@ -2071,8 +1975,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM300060625%2Fmatterport%2Fd6aaa5c7c076da640c3df302864dafa521af9700.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E9%AB%98%E5%B1%A4A%E5%AE%A4-M300060625",
       "published_at": "2026-07-01T16:07:28+08:00",
-      "updated_at": "2026-10-01T16:32:46+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T10:49:55+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300060625.jpg"
     },
     {
@@ -2088,7 +1992,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E9%AB%98%E5%B1%A4F%E5%AE%A4-M302190140",
       "published_at": "2025-08-22T11:58:11+08:00",
       "updated_at": "2026-09-08T21:10:32+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M302190140.jpg"
     },
     {
@@ -2103,8 +2007,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA5446749%2FH2209616_image_20260607180935632_67e4d3df6fb286ef9bc30092054ad43195296342.jpeg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E9%AB%98%E5%B1%A4E%E5%AE%A4-M352009765",
       "published_at": "2026-06-07T17:43:57+08:00",
-      "updated_at": "2026-10-16T12:23:38+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "centanet",
@@ -2130,7 +2034,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F4%E5%BA%A7%E4%B8%AD%E5%B1%A4G%E5%AE%A4-M351719909",
       "published_at": "2024-12-14T20:03:42+08:00",
       "updated_at": "2026-09-03T08:58:31+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M351719909.jpg"
     },
     {
@@ -2145,25 +2049,9 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/F5/3D/7F849EE14454A106988FB4F1948D.jpg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGK510?theme=rent",
       "published_at": "2026-08-31T15:35:58+08:00",
-      "updated_at": "2026-10-15T15:57:49+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:08:25+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGK510.jpg"
-    },
-    {
-      "source": "centanet",
-      "source_name": "中原地產",
-      "listing_id": "CFD993",
-      "title": "屯門市廣場 2期 2座",
-      "address": "2期 2座 2房",
-      "rent_hkd": 14500,
-      "room_type": "2房",
-      "bedrooms": 2,
-      "image_remote": "https://hkais.centanet.com/Images/20241008/025251_5340776c-d0ad-4aa1-a9b6-60b372331e19.jpeg?d=1",
-      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFD993?theme=rent",
-      "published_at": "2026-10-15T16:26:05+08:00",
-      "updated_at": "2026-10-16T13:49:44+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/centanet-CFD993.jpg"
     },
     {
       "source": "centanet",
@@ -2177,9 +2065,25 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-47303_447ce5d993a74ba5b201614d149bfdc8/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGY280?theme=rent",
       "published_at": "2026-07-24T11:05:11+08:00",
-      "updated_at": "2026-10-16T11:48:25+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:06:16+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGY280.jpg"
+    },
+    {
+      "source": "centanet",
+      "source_name": "中原地產",
+      "listing_id": "CFD993",
+      "title": "屯門市廣場 2期 2座",
+      "address": "2期 2座 2房",
+      "rent_hkd": 14500,
+      "room_type": "2房",
+      "bedrooms": 2,
+      "image_remote": "https://hkais.centanet.com/Images/20241008/025251_5340776c-d0ad-4aa1-a9b6-60b372331e19.jpeg?d=1",
+      "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFD993?theme=rent",
+      "published_at": "2026-10-15T16:26:05+08:00",
+      "updated_at": "2026-10-18T14:01:22+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
+      "image": "images/centanet-CFD993.jpg"
     },
     {
       "source": "centanet",
@@ -2193,8 +2097,8 @@
       "image_remote": "https://hkais.centanet.com/Images/20260109/033353_cefcc50c-578e-49b8-9499-aa9c8e2f20ce.jpg?srotate=0",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFV886?theme=rent",
       "published_at": "2026-01-09T20:26:25+08:00",
-      "updated_at": "2026-10-16T14:15:48+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T14:31:29+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFV886.jpg"
     },
     {
@@ -2209,8 +2113,8 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/42/1E/A8B7EADC47EEB38A216D98FFF3DC.jpg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CHA221?theme=rent",
       "published_at": "2026-06-09T17:49:33+08:00",
-      "updated_at": "2026-10-13T15:40:49+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:11:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CHA221.jpg"
     },
     {
@@ -2225,8 +2129,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA3433271%2FH220674A_image_20221113220056751_089134972.JPG",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F7%E5%BA%A7%E4%B8%AD%E5%B1%A4H%E5%AE%A4-M302176202",
       "published_at": "2022-11-13T21:31:05+08:00",
-      "updated_at": "2026-10-15T15:15:35+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-16T12:25:26+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M302176202.jpg"
     },
     {
@@ -2241,8 +2145,8 @@
       "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAA2344054%2FH222065A_image_20250505155709357_d395f7db8209348aeb89de11617e96ec40057515.jpg",
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F3%E5%BA%A7%E4%BD%8E%E5%B1%A4A%E5%AE%A4-M300122903",
       "published_at": "2025-05-07T19:35:25+08:00",
-      "updated_at": "2026-08-29T15:10:46+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-18T13:02:18+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300122903.jpg"
     },
     {
@@ -2258,7 +2162,7 @@
       "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F5%E5%BA%A7%E4%B8%AD%E5%B1%A4A%E5%AE%A4-M300207399",
       "published_at": "2026-09-08T11:32:55+08:00",
       "updated_at": "2026-10-15T18:05:28+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/midland-M300207399.jpg"
     },
     {
@@ -2273,8 +2177,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-40776_61d3450085f741c39c8e21cfe62579d4/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CES212?theme=rent",
       "published_at": "2026-07-13T11:39:27+08:00",
-      "updated_at": "2026-10-15T19:36:50+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T16:21:36+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CES212.jpg"
     },
     {
@@ -2289,8 +2193,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-27801_b58f14be99c04db486f38fde41a8d24f/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CIO659?fromagent=27801&theme=rent",
       "published_at": "2024-06-19T13:46:02+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:24:07+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CIO659.jpg"
     },
     {
@@ -2305,25 +2209,9 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-28590_521caf55a128457e93aea44e7953b097/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CGX229?theme=rent",
       "published_at": "2026-08-08T12:58:24+08:00",
-      "updated_at": "2026-10-16T13:42:45+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-19T12:06:16+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CGX229.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
-      "listing_id": "M300081065",
-      "title": "屯門市廣場 1期 6座 低層 D室",
-      "address": "1期 6座 低層 D室",
-      "rent_hkd": 15000,
-      "room_type": "3房",
-      "bedrooms": 3,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Fdoc-lms.s3.amazonaws.com%2Fstockphoto%2FAY9710%2FH1522398_image_20200818230544200.jpg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F6%E5%BA%A7%E4%BD%8E%E5%B1%A4D%E5%AE%A4-M300081065",
-      "published_at": "2020-07-24T20:59:40+08:00",
-      "updated_at": "2026-07-20T17:20:17+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M300081065.jpg"
     },
     {
       "source": "centanet",
@@ -2337,8 +2225,8 @@
       "image_remote": "https://hkvrdata.centanet.com/CNHK-45909_7d0e323ab22c46cbaa5a4ed8d873c8cf/CoverImage/Cover.jpg?x-oss-process=style/master",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFF156?theme=rent",
       "published_at": "2025-12-14T10:23:42+08:00",
-      "updated_at": "2026-10-16T12:26:22+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:26+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFF156.jpg"
     },
     {
@@ -2353,25 +2241,9 @@
       "image_remote": "https://hkais.centanet.com/PostImagesNew/21/A1/60AFF8A742CA99EE7721EB820DF4.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CEG769?theme=rent",
       "published_at": "2026-09-22T10:17:19+08:00",
-      "updated_at": "2026-10-16T14:38:11+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:22:12+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CEG769.jpg"
-    },
-    {
-      "source": "midland",
-      "source_name": "美聯物業",
-      "listing_id": "M300113502",
-      "title": "屯門市廣場 1期 7座 中層 G室",
-      "address": "1期 7座 中層 G室",
-      "rent_hkd": 15800,
-      "room_type": "3房",
-      "bedrooms": 3,
-      "image_remote": "https://wm-cdn.midland.com.hk/img_wm_revamp.php?wm=mr&src=https%3A%2F%2Finternal-res-thumbnail-midland.s3.amazonaws.com%2Fvr_thumbnails%2FM300113502%2F123%2F6ff67a2332df39d0177c1599e6ec16f9fb6e9556.jpg",
-      "url": "https://www.midland.com.hk/zh-hk/property/%E6%96%B0%E7%95%8C-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B41%E6%9C%9F7%E5%BA%A7%E4%B8%AD%E5%B1%A4G%E5%AE%A4-M300113502",
-      "published_at": "2017-06-18T13:01:09+08:00",
-      "updated_at": "2026-07-20T21:06:45+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
-      "image": "images/midland-M300113502.jpg"
     },
     {
       "source": "28hse",
@@ -2386,7 +2258,7 @@
       "url": "https://www.28hse.com/rent/apartment/property-4034167",
       "published_at": "2024-11-08T16:44:08+08:00",
       "updated_at": "2026-10-04T11:41:08+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "also_listed": [
         {
           "source": "midland",
@@ -2411,8 +2283,8 @@
       "image_remote": "https://hkais.centanet.com/Images/20250101/050348_81c35b78-4b74-4e71-98e7-b1795f9fbb0e.jpeg?d=1",
       "url": "https://hk.centanet.com/findproperty/detail/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_CFZ704?theme=rent",
       "published_at": "2025-01-01T17:22:55+08:00",
-      "updated_at": "2026-10-16T11:57:16+08:00",
-      "scraped_at": "2026-10-16T08:43:27Z",
+      "updated_at": "2026-10-20T08:23:57+08:00",
+      "scraped_at": "2026-10-20T05:18:50Z",
       "image": "images/centanet-CFZ704.jpg"
     }
   ]

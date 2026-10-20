@@ -60,6 +60,8 @@ a.more, a.source { color:#9a3412; font-size:13px; }
         <option value="published_asc">刊登時間（舊→新）</option>
         <option value="rent_asc">租金（低→高）</option>
         <option value="rent_desc">租金（高→低）</option>
+        <option value="psf_asc">尺價（低→高）</option>
+        <option value="psf_desc">尺價（高→低）</option>
       </select>
     </div>
     <div class="filters" id="rooms"></div>
@@ -197,10 +199,22 @@ function card(item) {
   const rent = item.rent_hkd
     ? ("HK$" + Number(item.rent_hkd).toLocaleString("zh-HK"))
     : "租金未列明";
+  const psf = psfValue(item);
+  const psfLine = psf != null
+    ? '<div class="room">尺價 HK$' + Number(psf).toLocaleString("zh-HK", {
+        minimumFractionDigits: Number.isInteger(psf) ? 0 : 1,
+        maximumFractionDigits: 1
+      }) + "</div>"
+    : "";
+  const areaLine = (typeof item.area_sqft === "number" && item.area_sqft > 0)
+    ? '<div class="when">實用 ' + Number(item.area_sqft).toLocaleString("zh-HK") + " 呎</div>"
+    : "";
   return '<article data-sources="' + esc(sourcesOf(item).join("|")) + '">' +
     '<a class="cardlink" href="' + esc(item.url) + '" target="_blank" rel="noopener">' + img + "</a>" +
     '<div class="body"><div class="rent">' + rent + "</div>" +
+    psfLine +
     '<div class="room">' + esc(item.room_type || "未列明") + "</div>" +
+    areaLine +
     '<div class="title">' + esc(item.title || "") + "</div>" +
     address +
     dateLine("刊登", item.published_at) +
@@ -247,9 +261,21 @@ function timeValue(iso) {
   return Number.isNaN(time) ? null : time;
 }
 
+function psfValue(item) {
+  if (item.rent_per_sqft != null && item.rent_per_sqft !== "") {
+    const value = Number(item.rent_per_sqft);
+    if (Number.isFinite(value) && value > 0) return value;
+  }
+  const rent = rentValue(item);
+  const area = (typeof item.area_sqft === "number" && item.area_sqft > 0) ? item.area_sqft : null;
+  if (rent == null || area == null) return null;
+  return Math.round((rent / area) * 10) / 10;
+}
+
 function sortValue(item) {
   if (sortKey.startsWith("updated")) return timeValue(item.updated_at);
   if (sortKey.startsWith("published")) return timeValue(item.published_at);
+  if (sortKey.startsWith("psf")) return psfValue(item);
   if (item.rent_hkd == null || item.rent_hkd === "") return null;
   const rent = Number(item.rent_hkd);
   return Number.isFinite(rent) ? rent : null;
@@ -365,6 +391,20 @@ function filterNote() {
   return "跟住篩選：" + room + " · " + source + "。只計每張卡片嘅租金。";
 }
 
+function psfFilterNote() {
+  const room = roomFilter === "all"
+    ? "全部房型"
+    : ((ROOM_OPTIONS.find(option => option.id === roomFilter) || {}).label || roomFilter);
+  const source = sourceFilter === "all" ? "全部來源" : sourceFilter;
+  return "跟住篩選：" + room + " · " + source + "。只計有實用面積、非分間房嘅卡片。";
+}
+
+function meanOf(values) {
+  if (!values.length) return null;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+
 function recentNote() {
   const day = formatDay(asOfDate().toISOString());
   if (dataAsOf && !Number.isNaN(dataAsOf.getTime())) {
@@ -373,17 +413,35 @@ function recentNote() {
   return "以而家 " + day + " 計，最近 30 日有更新";
 }
 
+function formatPsfMoney(value) {
+  return "HK$" + Number(value).toLocaleString("zh-HK", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1
+  });
+}
+
+function psfLine(kind, values) {
+  if (!values.length) return kind + " —（0 個盤）";
+  const value = kind === "平均" ? meanOf(values) : medianOf(values);
+  return kind + " " + formatPsfMoney(value) + "（" + values.length + " 個盤）";
+}
+
 function renderMedians() {
   const cutoff = asOfDate().getTime() - 30 * 24 * 60 * 60 * 1000;
   const allRents = [];
   const recentRents = [];
+  const allPsf = [];
   listings.forEach(item => {
     if (!matchesSource(item, sourceFilter) || !matchesRoom(item, roomFilter)) return;
     const rent = rentValue(item);
-    if (rent == null) return;
-    allRents.push(rent);
-    const updated = timeValue(item.updated_at);
-    if (updated != null && updated >= cutoff) recentRents.push(rent);
+    if (rent != null) {
+      allRents.push(rent);
+      const updated = timeValue(item.updated_at);
+      if (updated != null && updated >= cutoff) recentRents.push(rent);
+    }
+    if (roomBucket(item) === "partition") return;
+    const psf = psfValue(item);
+    if (psf != null) allPsf.push(psf);
   });
   mediansEl.hidden = false;
   mediansEl.innerHTML =
@@ -396,6 +454,16 @@ function renderMedians() {
       '<div class="median"><div class="k">全部</div>' +
       '<div class="v">' + esc(medianLine(allRents)) + "</div>" +
       '<div class="n">有租金嘅卡片</div></div>' +
+    "</div>" +
+    '<p class="caption">尺價（實用呎）</p>' +
+    '<p class="note">' + esc(psfFilterNote()) + "</p>" +
+    '<div class="median-row">' +
+      '<div class="median"><div class="k">平均尺價</div>' +
+      '<div class="v">' + esc(psfLine("平均", allPsf)) + "</div>" +
+      '<div class="n">有實用面積嘅卡片</div></div>" +
+      '<div class="median"><div class="k">中位尺價</div>' +
+      '<div class="v">' + esc(psfLine("中位", allPsf)) + "</div>" +
+      '<div class="n">有實用面積嘅卡片</div></div>' +
     "</div>";
 }
 

@@ -41,6 +41,33 @@ def fetch(url: str, *, data: bytes | None = None, headers: dict[str, str] | None
         return exc.code, exc.read(), exc.headers.get("Set-Cookie") or ""
 
 
+def fetch_with_retries(
+    url: str,
+    *,
+    data: bytes | None = None,
+    headers: dict[str, str] | None = None,
+    attempts: int = 4,
+    pause: float = 1.5,
+) -> tuple[int, bytes, str]:
+    last = (0, b"", "")
+    for attempt in range(1, attempts + 1):
+        try:
+            status, body, cookie = fetch(url, data=data, headers=headers)
+        except (urllib.error.URLError, TimeoutError) as exc:
+            print(f"fetch retry {attempt}/{attempts} {exc}", flush=True)
+            if attempt == attempts:
+                raise
+            time.sleep(pause * attempt)
+            continue
+        last = (status, body, cookie)
+        if status in {429, 500, 502, 503, 504} and attempt < attempts:
+            print(f"fetch HTTP {status} retry {attempt}/{attempts}", flush=True)
+            time.sleep(pause * attempt)
+            continue
+        return last
+    return last
+
+
 CN_ROOMS = {"一": 1, "二": 2, "兩": 2, "三": 3, "四": 4, "五": 5}
 
 
@@ -75,6 +102,33 @@ def money(value: int | None) -> str:
     if value is None:
         return "租金未列明"
     return f"HK${value:,}"
+
+def saleable_sqft(value: object) -> int | None:
+    """Prefer integer 實用面積 in sq ft; ignore zero/invalid."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value if value > 0 else None
+    if isinstance(value, float):
+        if value <= 0 or value != value:
+            return None
+        return int(round(value))
+    if isinstance(value, str):
+        digits = re.sub(r"[^\d]", "", value)
+        if not digits:
+            return None
+        number = int(digits)
+        return number if number > 0 else None
+    return None
+
+
+def rent_per_sqft(rent: int | None, area: int | None) -> float | None:
+    if not isinstance(rent, int) or rent <= 0:
+        return None
+    if not isinstance(area, int) or area <= 0:
+        return None
+    return round(rent / area, 1)
+
 
 
 def normalize_dt(value: object) -> str | None:
@@ -170,6 +224,10 @@ def parse_28hse() -> list[dict]:
         if image.endswith("_thumb.jpg"):
             image = image.replace("_thumb.jpg", "_large.jpg")
         rent = int(rent_match.group(1).replace(",", "")) if rent_match else None
+        area_match = re.search(r"實用面積\s*[:：]?\s*([\d,]+)\s*呎", plain)
+        if not area_match:
+            area_match = re.search(r"實用面積\s*[:：]?\s*([\d,]+)\s*呎", part)
+        area = saleable_sqft(area_match.group(1) if area_match else None)
         detail_url = url_match.group(1)
         published_at = None
         updated_at = None
@@ -186,6 +244,8 @@ def parse_28hse() -> list[dict]:
                 "title": title or f"{ESTATE} {address}".strip(),
                 "address": address,
                 "rent_hkd": rent,
+                "area_sqft": area,
+                "rent_per_sqft": rent_per_sqft(rent, area),
                 "room_type": room,
                 "bedrooms": bedrooms,
                 "image_remote": image,
@@ -247,8 +307,11 @@ def parse_midland() -> list[dict]:
                 }
             )
         )
-        status, body, _ = fetch(url, headers=headers)
+        status, body, _ = fetch_with_retries(url, headers=headers)
         if status != 200:
+            if listings:
+                print(f"midland stop early HTTP {status} page {page}; keeping {len(listings)}", flush=True)
+                break
             raise RuntimeError(f"Midland HTTP {status} page {page}")
         payload = json.loads(body.decode("utf-8"))
         total = payload.get("count", total)
@@ -282,6 +345,7 @@ def parse_midland() -> list[dict]:
                 except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
                     print(f"midland date {row.get('serial_no')}: {exc}", flush=True)
                 time.sleep(0.2)
+            area = saleable_sqft(row.get("net_area"))
             listings.append(
                 {
                     "source": "midland",
@@ -290,6 +354,8 @@ def parse_midland() -> list[dict]:
                     "title": f"{estate} {address}".strip(),
                     "address": address,
                     "rent_hkd": rent,
+                    "area_sqft": area,
+                    "rent_per_sqft": rent_per_sqft(rent, area),
                     "room_type": room_label(bedrooms),
                     "bedrooms": bedrooms,
                     "image_remote": image,
@@ -330,7 +396,7 @@ def parse_centanet() -> list[dict]:
             "bigestAndEstate": ["3-NXLIIHSSHT"],
             "phaseAndEstate": [],
         }
-        status, raw, _ = fetch(
+        status, raw, _ = fetch_with_retries(
             "https://hk.centanet.com/findproperty/api/Post/Search",
             data=json.dumps(body).encode("utf-8"),
             headers={
@@ -341,6 +407,9 @@ def parse_centanet() -> list[dict]:
             },
         )
         if status != 200:
+            if listings:
+                print(f"centanet stop early HTTP {status} offset {offset}; keeping {len(listings)}", flush=True)
+                break
             raise RuntimeError(f"Centaline HTTP {status} offset {offset}")
         payload = json.loads(raw.decode("utf-8"))
         total = payload.get("count", total)
@@ -363,6 +432,11 @@ def parse_centanet() -> list[dict]:
             detail = row.get("detailUrl") or ""
             if detail and "theme=" not in detail:
                 detail = detail + ("&" if "?" in detail else "?") + "theme=rent"
+            area = saleable_sqft(row.get("nSize"))
+            if area is None:
+                area_info = row.get("areaInfo") or {}
+                if isinstance(area_info, dict):
+                    area = saleable_sqft(area_info.get("nSize"))
             listings.append(
                 {
                     "source": "centanet",
@@ -371,6 +445,8 @@ def parse_centanet() -> list[dict]:
                     "title": line1,
                     "address": " ".join(part for part in [line1.replace(ESTATE, "").strip(), line2] if part),
                     "rent_hkd": rent,
+                    "area_sqft": area,
+                    "rent_per_sqft": rent_per_sqft(rent, area),
                     "room_type": room_label(bedrooms, line2),
                     "bedrooms": bedrooms,
                     "image_remote": image,
@@ -429,6 +505,17 @@ def dedupe(listings: list[dict]) -> list[dict]:
         primary["updated_at"] = pick_bound(
             [item.get("updated_at") for item in group], latest=True
         )
+        if not isinstance(primary.get("area_sqft"), int) or primary.get("area_sqft") <= 0:
+            for item in group[1:]:
+                area = item.get("area_sqft")
+                if isinstance(area, int) and area > 0:
+                    primary["area_sqft"] = area
+                    primary["rent_per_sqft"] = rent_per_sqft(primary.get("rent_hkd"), area)
+                    break
+        else:
+            primary["rent_per_sqft"] = rent_per_sqft(
+                primary.get("rent_hkd"), primary.get("area_sqft")
+            )
         primary["also_listed"] = [
             {
                 "source": item["source"],
@@ -538,7 +625,9 @@ def main() -> None:
         rows = [item for item in listings if item.get("source") == source]
         published = sum(1 for item in rows if item.get("published_at"))
         updated = sum(1 for item in rows if item.get("updated_at"))
+        with_area = sum(1 for item in rows if isinstance(item.get("area_sqft"), int) and item["area_sqft"] > 0)
         print(f"dates {source}: {published} published_at, {updated} updated_at, {len(rows)} cards")
+        print(f"area {source}: {with_area}/{len(rows)} with area_sqft")
 
 
 if __name__ == "__main__":

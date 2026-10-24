@@ -1,6 +1,6 @@
 # 屯門市廣場 租盤
 
-仍在放租的屯門市廣場單位，彙整 28Hse、美聯物業、中原地產、利嘉閣。頁面讀 `data/listings.json`，圖片在 `images/`。資料會排除全部 8座（第3期）單位。
+仍在放租的屯門市廣場、屯門時代廣場單位，彙整 28Hse、美聯物業、中原地產、利嘉閣。頁面讀 `data/listings.json`，圖片在 `images/`。屯門市廣場會排除全部 8座（第3期）單位；時代廣場不套用此規則。
 
 網站：https://burnxwallpaper.github.io/tuen-mun-plaza-rentals/
 
@@ -23,7 +23,8 @@ python -m http.server 8080
 `meta` 包含：
 
 - `updated_at`：香港時間 ISO（例如 `2026-09-26T00:35:32+08:00`）
-- `search_key`：`屯門市廣場`
+- `search_key`：兩個屋苑名稱
+- `estate_counts`：各屋苑卡片數
 - `card_count`：畫面上的卡片數（跨來源合併後）
 - `source_counts`：各來源出現次數（合併卡上的「同時見於」也計入，所以合計可以大於卡片數）
 - `primary_counts`：每張卡主來源的數量
@@ -40,6 +41,8 @@ python -m http.server 8080
 - 美聯：https://www.midland.com.hk/zh-hk/list/rent/屯門市廣場-E-E00091
 - 中原：https://hk.centanet.com/findproperty/list/rent/屯門市廣場_3-NXLIIHSSHT
 - 利嘉閣：https://www.ricacorp.com/zh-hk/property/list/rent/屯門市廣場-bigest-屯門市中心-hma-hk
+
+時代廣場另有對應搜尋：28Hse `c4458`、美聯 `E00496`、中原 `2-BGKEBPYEPS`、利嘉閣 `時代廣場-estate-屯門市中心-hma-hk`。
 
 ## 更新並推上網站
 

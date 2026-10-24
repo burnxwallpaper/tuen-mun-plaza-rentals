@@ -1,4 +1,4 @@
-"""Refresh active 屯門市廣場 rental listings into data/listings.json and images/.
+"""Refresh active rental listings for 屯門市廣場 + 屯門時代廣場 into data/listings.json.
 
 Sources: 28hse, Midland Realty, Centaline, Ricacorp (利嘉閣). Stdlib only.
 index.html fetches data/listings.json; this script does not rewrite the page.
@@ -14,6 +14,7 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 IMAGES = ROOT / "images"
@@ -23,8 +24,54 @@ UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 )
-ESTATE = "屯門市廣場"
 SCRAPED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+# Canonical estates tracked by this page.
+ESTATES: list[dict[str, Any]] = [
+    {
+        "id": "tuen-mun-plaza",
+        "name": "屯門市廣場",
+        "short": "市廣場",
+        "exclude_block_8": True,
+        "hse28_url": "https://www.28hse.com/rent/a3/dg48/c4433",
+        "midland_est_id": "E00091",
+        "midland_list_url": (
+            "https://www.midland.com.hk/zh-hk/list/rent/"
+            "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-E-E00091"
+        ),
+        "centanet_id": "3-NXLIIHSSHT",
+        "centanet_list_url": (
+            "https://hk.centanet.com/findproperty/list/rent/"
+            "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_3-NXLIIHSSHT"
+        ),
+        "ricacorp_url": (
+            "https://www.ricacorp.com/zh-hk/property/list/rent/"
+            "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-bigest-"
+            "%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-hma-hk"
+        ),
+    },
+    {
+        "id": "trend-plaza",
+        "name": "屯門時代廣場",
+        "short": "時代廣場",
+        "exclude_block_8": False,
+        "hse28_url": "https://www.28hse.com/rent/a3/dg48/c4458",
+        "midland_est_id": "E00496",
+        "midland_list_url": (
+            "https://www.midland.com.hk/zh-hk/list/rent/"
+            "%E6%99%82%E4%BB%A3%E5%BB%A3%E5%A0%B4-E-E00496"
+        ),
+        "centanet_id": "2-BGKEBPYEPS",
+        "centanet_list_url": (
+            "https://hk.centanet.com/findproperty/list/rent/"
+            "%E6%99%82%E4%BB%A3%E5%BB%A3%E5%A0%B4_2-BGKEBPYEPS"
+        ),
+        "ricacorp_url": (
+            "https://www.ricacorp.com/zh-hk/property/list/rent/"
+            + urllib.parse.quote("時代廣場-estate-屯門市中心-hma-hk")
+        ),
+    },
+]
 
 
 def fetch(url: str, *, data: bytes | None = None, headers: dict[str, str] | None = None) -> tuple[int, bytes, str]:
@@ -131,6 +178,26 @@ def rent_per_sqft(rent: int | None, area: int | None) -> float | None:
 
 
 
+
+def as_rent(value: object) -> int | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value if value > 0 else None
+    if isinstance(value, float):
+        if value <= 0 or value != value:
+            return None
+        rounded = int(round(value))
+        return rounded if abs(value - rounded) < 1e-6 else None
+    if isinstance(value, str):
+        digits = re.sub(r"[^\d]", "", value)
+        if not digits:
+            return None
+        number = int(digits)
+        return number if number > 0 else None
+    return None
+
+
 def normalize_dt(value: object) -> str | None:
     """ISO datetime in Hong Kong time. Offset-less source values are treated as HKT."""
     if not isinstance(value, str):
@@ -191,10 +258,11 @@ def published_at_midland(url: str) -> str | None:
     return normalize_dt(detail.get("first_pub_date"))
 
 
-def parse_28hse() -> list[dict]:
-    status, body, _ = fetch("https://www.28hse.com/rent/a3/dg48/c4433")
+def parse_28hse(estate: dict[str, Any]) -> list[dict]:
+    estate_name = str(estate["name"])
+    status, body, _ = fetch(str(estate["hse28_url"]))
     if status != 200:
-        raise RuntimeError(f"28hse HTTP {status}")
+        raise RuntimeError(f"28hse HTTP {status} ({estate_name})")
     text = body.decode("utf-8", errors="replace")
     count_match = re.search(r"共有\s*(\d+)\s*個放租樓盤", text)
     declared = int(count_match.group(1)) if count_match else None
@@ -218,7 +286,7 @@ def parse_28hse() -> list[dict]:
             for line in candidates
             if ("房" in line or "盤" in line or "租" in line) and not room_only.match(line)
         ]
-        title = (titled[0] if titled else "") or f"{ESTATE} {address}".strip()
+        title = (titled[0] if titled else "") or f"{estate_name} {address}".strip()
         bedrooms, room = room_from_text(" ".join(lines))
         image = img_match.group(0) if img_match else ""
         if image.endswith("_thumb.jpg"):
@@ -240,8 +308,9 @@ def parse_28hse() -> list[dict]:
             {
                 "source": "28hse",
                 "source_name": "28Hse",
+                "estate": estate_name,
                 "listing_id": url_match.group(2),
-                "title": title or f"{ESTATE} {address}".strip(),
+                "title": title or f"{estate_name} {address}".strip(),
                 "address": address,
                 "rent_hkd": rent,
                 "area_sqft": area,
@@ -256,7 +325,7 @@ def parse_28hse() -> list[dict]:
             }
         )
     if declared is not None and len(listings) != declared:
-        print(f"28hse declared {declared}, parsed {len(listings)}")
+        print(f"28hse {estate_name} declared {declared}, parsed {len(listings)}")
     return listings
 
 
@@ -280,7 +349,8 @@ def midland_token() -> str:
     return urllib.parse.unquote(match.group(1))
 
 
-def parse_midland() -> list[dict]:
+def parse_midland(estate: dict[str, Any]) -> list[dict]:
+    estate_name = str(estate["name"])
     token = midland_token()
     headers = {
         "Authorization": f"Bearer {token}",
@@ -300,7 +370,7 @@ def parse_midland() -> list[dict]:
                     "currency": "HKD",
                     "unit": "feet",
                     "search_behavior": "normal",
-                    "est_ids": "E00091",
+                    "est_ids": str(estate["midland_est_id"]),
                     "tx_type": "L",
                     "limit": "24",
                     "page": str(page),
@@ -312,7 +382,7 @@ def parse_midland() -> list[dict]:
             if listings:
                 print(f"midland stop early HTTP {status} page {page}; keeping {len(listings)}", flush=True)
                 break
-            raise RuntimeError(f"Midland HTTP {status} page {page}")
+            raise RuntimeError(f"Midland HTTP {status} page {page} ({estate_name})")
         payload = json.loads(body.decode("utf-8"))
         total = payload.get("count", total)
         rows = payload.get("result") or []
@@ -321,10 +391,10 @@ def parse_midland() -> list[dict]:
         for row in rows:
             if "L" not in (row.get("tx_type") or []) and row.get("rent") in (None, 0):
                 continue
-            rent = row.get("rent")
-            if not isinstance(rent, int) or rent <= 0:
+            rent = as_rent(row.get("rent"))
+            if rent is None:
                 continue
-            estate = (row.get("estate") or {}).get("name") or ESTATE
+            api_estate = (row.get("estate") or {}).get("name") or estate_name
             phase = (row.get("phase") or {}).get("name") or ""
             building = (row.get("building") or {}).get("name") or ""
             floor = (row.get("floor_level") or {}).get("name") or ""
@@ -350,8 +420,9 @@ def parse_midland() -> list[dict]:
                 {
                     "source": "midland",
                     "source_name": "美聯物業",
+                    "estate": estate_name,
                     "listing_id": row.get("serial_no") or "",
-                    "title": f"{estate} {address}".strip(),
+                    "title": f"{api_estate} {address}".strip(),
                     "address": address,
                     "rent_hkd": rent,
                     "area_sqft": area,
@@ -366,7 +437,7 @@ def parse_midland() -> list[dict]:
                 }
             )
             if len(listings) % 10 == 0:
-                print(f"midland dates {len(listings)}", flush=True)
+                print(f"midland {estate_name} dates {len(listings)}", flush=True)
         if total is not None and page * 24 >= int(total):
             break
         page += 1
@@ -374,7 +445,8 @@ def parse_midland() -> list[dict]:
     return listings
 
 
-def parse_centanet() -> list[dict]:
+def parse_centanet(estate: dict[str, Any]) -> list[dict]:
+    estate_name = str(estate["name"])
     listings: list[dict] = []
     offset = 0
     size = 24
@@ -393,7 +465,7 @@ def parse_centanet() -> list[dict]:
             "primarySchoolNets": [],
             "markets": [],
             "universities": [],
-            "bigestAndEstate": ["3-NXLIIHSSHT"],
+            "bigestAndEstate": [str(estate["centanet_id"])],
             "phaseAndEstate": [],
         }
         status, raw, _ = fetch_with_retries(
@@ -410,21 +482,21 @@ def parse_centanet() -> list[dict]:
             if listings:
                 print(f"centanet stop early HTTP {status} offset {offset}; keeping {len(listings)}", flush=True)
                 break
-            raise RuntimeError(f"Centaline HTTP {status} offset {offset}")
+            raise RuntimeError(f"Centaline HTTP {status} offset {offset} ({estate_name})")
         payload = json.loads(raw.decode("utf-8"))
         total = payload.get("count", total)
         rows = payload.get("data") or []
         if not rows:
             break
         for row in rows:
-            rent = row.get("rentPrice")
-            if not isinstance(rent, int) or rent <= 0:
+            rent = as_rent(row.get("rentPrice"))
+            if rent is None:
                 price_info = row.get("priceInfo") or {}
-                rent = price_info.get("rent")
-            if not isinstance(rent, int) or rent <= 0:
+                rent = as_rent(price_info.get("rent"))
+            if rent is None:
                 continue
             display = (row.get("displayText") or {}).get("addr") or {}
-            line1 = display.get("line1") or ESTATE
+            line1 = display.get("line1") or estate_name
             line2 = display.get("line2") or ""
             bedrooms = row.get("bedroomCount") if isinstance(row.get("bedroomCount"), int) else None
             picture = row.get("picture") or {}
@@ -437,13 +509,17 @@ def parse_centanet() -> list[dict]:
                 area_info = row.get("areaInfo") or {}
                 if isinstance(area_info, dict):
                     area = saleable_sqft(area_info.get("nSize"))
+            title_tail = line1
+            for label in (estate_name, "時代廣場", "屯門市廣場"):
+                title_tail = title_tail.replace(label, "").strip()
             listings.append(
                 {
                     "source": "centanet",
                     "source_name": "中原地產",
+                    "estate": estate_name,
                     "listing_id": row.get("refNo") or row.get("id") or "",
                     "title": line1,
-                    "address": " ".join(part for part in [line1.replace(ESTATE, "").strip(), line2] if part),
+                    "address": " ".join(part for part in [title_tail, line2] if part),
                     "rent_hkd": rent,
                     "area_sqft": area,
                     "rent_per_sqft": rent_per_sqft(rent, area),
@@ -463,11 +539,6 @@ def parse_centanet() -> list[dict]:
     return listings
 
 
-RICACORP_LIST_URL = (
-    "https://www.ricacorp.com/zh-hk/property/list/rent/"
-    "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-bigest-"
-    "%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-hma-hk"
-)
 BLOCK_8_RE = re.compile(
     r"(?<!\d)8\s*座|第\s*8\s*座|第八\s*座|Block\s*0*8\b",
     re.IGNORECASE,
@@ -480,11 +551,12 @@ def is_block_8(listing: dict) -> bool:
     return bool(BLOCK_8_RE.search(blob))
 
 
-def exclude_block_8(listings: list[dict]) -> tuple[list[dict], int]:
+def exclude_tmtp_block_8(listings: list[dict]) -> tuple[list[dict], int]:
+    """Drop 8座 only for 屯門市廣場. Trend Plaza keeps all blocks."""
     kept: list[dict] = []
     removed = 0
     for listing in listings:
-        if is_block_8(listing):
+        if listing.get("estate") == "屯門市廣場" and is_block_8(listing):
             removed += 1
             continue
         kept.append(listing)
@@ -547,14 +619,16 @@ def _rica_flat(raw: object) -> str:
     return raw.strip()
 
 
-def parse_ricacorp() -> list[dict]:
-    """Scrape Ricacorp SSR transfer-state for 屯門市廣場 rentals."""
+def parse_ricacorp(estate: dict[str, Any]) -> list[dict]:
+    """Scrape Ricacorp SSR transfer-state for one estate."""
+    estate_name = str(estate["name"])
+    list_url = str(estate["ricacorp_url"])
     status, body, _ = fetch_with_retries(
-        RICACORP_LIST_URL,
+        list_url,
         headers={"Accept-Language": "zh-HK", "Accept": "text/html"},
     )
     if status != 200 or not body:
-        raise RuntimeError(f"Ricacorp HTTP {status}")
+        raise RuntimeError(f"Ricacorp HTTP {status} ({estate_name})")
     html = body.decode("utf-8", "replace")
     state = _rica_transfer_state(html)
     if not state:
@@ -584,7 +658,7 @@ def parse_ricacorp() -> list[dict]:
         display = (
             row.get("displayTextHk")
             or row.get("displayText")
-            or ESTATE
+            or estate_name
         )
         floor = str(row.get("floorZoneText") or "").strip()
         flat = _rica_flat(row.get("flatZoneTextEn"))
@@ -595,7 +669,7 @@ def parse_ricacorp() -> list[dict]:
             for part in loc:
                 if not isinstance(part, str):
                     continue
-                if re.search(r"\d+\s*座", part):
+                if re.search(r"(?:\d+|[A-Za-z])\s*座", part):
                     building = part.strip()
                 phase_match = re.search(r"(\d+\s*期)", part)
                 if phase_match:
@@ -604,14 +678,17 @@ def parse_ricacorp() -> list[dict]:
             part for part in [phase, building or "", floor, flat] if part
         ).strip()
         if not address:
-            address = str(display).replace(ESTATE, "").strip()
+            address = str(display)
+            for label in (estate_name, "時代廣場", "屯門市廣場"):
+                address = address.replace(label, "")
+            address = address.strip()
         bedrooms = row.get("room") if isinstance(row.get("room"), int) else None
         area = saleable_sqft(row.get("saleableArea"))
         alias = str(row.get("aliasV4") or row.get("alias") or "")
         detail_url = (
             f"https://www.ricacorp.com/zh-hk/property/detail/{urllib.parse.quote(alias, safe='-._~')}"
             if alias
-            else RICACORP_LIST_URL
+            else list_url
         )
         image = (
             row.get("thumbnailDesktop")
@@ -625,8 +702,9 @@ def parse_ricacorp() -> list[dict]:
             {
                 "source": "ricacorp",
                 "source_name": "利嘉閣",
+                "estate": estate_name,
                 "listing_id": post_no,
-                "title": str(display).strip() or ESTATE,
+                "title": str(display).strip() or estate_name,
                 "address": address,
                 "rent_hkd": rent,
                 "area_sqft": area,
@@ -641,23 +719,27 @@ def parse_ricacorp() -> list[dict]:
             }
         )
     if total is not None and int(total) != len(rows):
-        print(f"ricacorp declared {total}, rows {len(rows)}", flush=True)
+        print(f"ricacorp {estate_name} declared {total}, rows {len(rows)}", flush=True)
     if state.get("POSTSHASMORE"):
-        print("ricacorp has more pages; only first SSR page scraped", flush=True)
+        print(f"ricacorp {estate_name} has more pages; only first SSR page scraped", flush=True)
     return listings
 
 
 def unit_key(listing: dict) -> str | None:
     text = f"{listing.get('title') or ''} {listing.get('address') or ''}"
-    block = re.search(r"(\d+)\s*座", text)
+    block = re.search(r"(\d+)\s*座", text) or re.search(r"([A-Ea-e])\s*座", text)
     flat = re.search(r"([A-Za-z])\s*室", text)
-    floor = re.search(r"(高層|中層|低層)", text)
+    floor = re.search(r"(極高層|高層|中層|低層)", text)
     if not block or not flat or not floor:
         return None
     bedrooms = listing.get("bedrooms")
     if not isinstance(bedrooms, int):
         return None
-    return f"{block.group(1)}|{floor.group(1)}|{flat.group(1).upper()}|{bedrooms}"
+    estate = listing.get("estate") or ""
+    return (
+        f"{estate}|{block.group(1).upper()}|{floor.group(1)}|"
+        f"{flat.group(1).upper()}|{bedrooms}"
+    )
 
 
 def dedupe(listings: list[dict]) -> list[dict]:
@@ -758,34 +840,52 @@ def primary_counts(listings: list[dict]) -> dict[str, int]:
     return counts
 
 
+def estate_counts(listings: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for listing in listings:
+        name = str(listing.get("estate") or "未列明")
+        counts[name] = counts.get(name, 0) + 1
+    return counts
+
+
 def write_data(listings: list[dict]) -> None:
     payload = {
         "meta": {
             "updated_at": datetime.now(HKT).replace(microsecond=0).isoformat(),
-            "search_key": ESTATE,
+            "search_key": "／".join(str(item["name"]) for item in ESTATES),
             "card_count": len(listings),
+            "estate_counts": estate_counts(listings),
             "source_counts": appearance_counts(listings),
             "primary_counts": primary_counts(listings),
+            "estates": [
+                {
+                    "id": item["id"],
+                    "name": item["name"],
+                    "short": item["short"],
+                    "exclude_block_8": bool(item.get("exclude_block_8")),
+                }
+                for item in ESTATES
+            ],
             "sources": [
                 {
                     "id": "28hse",
                     "name": "28Hse",
-                    "url": "https://www.28hse.com/rent/a3/dg48/c4433",
+                    "url": ESTATES[0]["hse28_url"],
                 },
                 {
                     "id": "midland",
                     "name": "美聯物業",
-                    "url": "https://www.midland.com.hk/zh-hk/list/rent/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-E-E00091",
+                    "url": ESTATES[0]["midland_list_url"],
                 },
                 {
                     "id": "centanet",
                     "name": "中原地產",
-                    "url": "https://hk.centanet.com/findproperty/list/rent/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_3-NXLIIHSSHT",
+                    "url": ESTATES[0]["centanet_list_url"],
                 },
                 {
                     "id": "ricacorp",
                     "name": "利嘉閣",
-                    "url": "https://www.ricacorp.com/zh-hk/property/list/rent/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-bigest-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-hma-hk",
+                    "url": ESTATES[0]["ricacorp_url"],
                 },
             ],
         },
@@ -798,34 +898,43 @@ def write_data(listings: list[dict]) -> None:
 def main() -> None:
     errors: list[str] = []
     collected: list[dict] = []
-    for name, parser in (
+    parsers = (
         ("28hse", parse_28hse),
         ("midland", parse_midland),
         ("centanet", parse_centanet),
         ("ricacorp", parse_ricacorp),
-    ):
-        try:
-            rows = parser()
-            print(f"{name}: {len(rows)}")
-            collected.extend(rows)
-        except Exception as exc:
-            errors.append(f"{name}: {exc}")
-            print(f"{name} FAILED: {exc}")
-    collected, removed_block8 = exclude_block_8(collected)
-    print(f"excluded block 8: {removed_block8}", flush=True)
+    )
+    for estate in ESTATES:
+        estate_name = str(estate["name"])
+        for source_name, parser in parsers:
+            label = f"{source_name}/{estate_name}"
+            try:
+                rows = parser(estate)
+                print(f"{label}: {len(rows)}")
+                collected.extend(rows)
+            except Exception as exc:
+                errors.append(f"{label}: {exc}")
+                print(f"{label} FAILED: {exc}")
+    collected, removed_block8 = exclude_tmtp_block_8(collected)
+    print(f"excluded TMTP block 8: {removed_block8}", flush=True)
     listings = dedupe(collected)
-    # Safety: never ship 8座 even if dedupe somehow reintroduced address text
-    listings, removed_after = exclude_block_8(listings)
+    listings, removed_after = exclude_tmtp_block_8(listings)
     if removed_after:
-        print(f"excluded block 8 after dedupe: {removed_after}", flush=True)
+        print(f"excluded TMTP block 8 after dedupe: {removed_after}", flush=True)
     cache_images(listings)
     write_data(listings)
-    print(f"cards {len(listings)} errors {errors} block8_removed {removed_block8 + removed_after}")
+    print(
+        f"cards {len(listings)} errors {errors} "
+        f"tmtp_block8_removed {removed_block8 + removed_after}"
+    )
+    print(f"estate_counts {estate_counts(listings)}", flush=True)
     for source in ("28hse", "midland", "centanet", "ricacorp"):
         rows = [item for item in listings if item.get("source") == source]
         published = sum(1 for item in rows if item.get("published_at"))
         updated = sum(1 for item in rows if item.get("updated_at"))
-        with_area = sum(1 for item in rows if isinstance(item.get("area_sqft"), int) and item["area_sqft"] > 0)
+        with_area = sum(
+            1 for item in rows if isinstance(item.get("area_sqft"), int) and item["area_sqft"] > 0
+        )
         print(f"dates {source}: {published} published_at, {updated} updated_at, {len(rows)} cards")
         print(f"area {source}: {with_area}/{len(rows)} with area_sqft")
 

@@ -1,6 +1,6 @@
 """Refresh active 屯門市廣場 rental listings into data/listings.json and images/.
 
-Sources: 28hse, Midland Realty, Centaline. Stdlib only.
+Sources: 28hse, Midland Realty, Centaline, Ricacorp (利嘉閣). Stdlib only.
 index.html fetches data/listings.json; this script does not rewrite the page.
 """
 
@@ -463,6 +463,190 @@ def parse_centanet() -> list[dict]:
     return listings
 
 
+RICACORP_LIST_URL = (
+    "https://www.ricacorp.com/zh-hk/property/list/rent/"
+    "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-bigest-"
+    "%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-hma-hk"
+)
+BLOCK_8_RE = re.compile(
+    r"(?<!\d)8\s*座|第\s*8\s*座|第八\s*座|Block\s*0*8\b",
+    re.IGNORECASE,
+)
+
+
+def is_block_8(listing: dict) -> bool:
+    """True when title/address clearly refers to 8座 (not 18座 etc.)."""
+    blob = f"{listing.get('title') or ''} {listing.get('address') or ''}"
+    return bool(BLOCK_8_RE.search(blob))
+
+
+def exclude_block_8(listings: list[dict]) -> tuple[list[dict], int]:
+    kept: list[dict] = []
+    removed = 0
+    for listing in listings:
+        if is_block_8(listing):
+            removed += 1
+            continue
+        kept.append(listing)
+    return kept, removed
+
+
+def _rica_transfer_state(html: str) -> dict | None:
+    match = re.search(r"(\{&q;LAZYIMGUNIVERSAL_SERVERKEY_logo-icon.*)", html, re.S)
+    if not match:
+        return None
+    decoded = (
+        match.group(1)
+        .replace("&q;", '"')
+        .replace("&a;", "&")
+        .replace("&s;", "'")
+        .replace("&l;", "<")
+        .replace("&g;", ">")
+    )
+    try:
+        payload, _end = json.JSONDecoder().raw_decode(decoded)
+    except json.JSONDecodeError:
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def _rica_ad_dates(html: str) -> dict[str, str]:
+    """Map postNo -> published_at (HKT) from 廣告日期 on the list page."""
+    out: dict[str, str] = {}
+    pattern = re.compile(
+        r"廣告日期</span><span[^>]*>\s*(\d{2}/\d{2}/\d{4})\s*</span>.*?"
+        r"物業編號</span><span[^>]*>\s*([A-Z]{2}\d{8})",
+        re.S,
+    )
+    for match in pattern.finditer(html):
+        day, month, year = match.group(1).split("/")
+        out[match.group(2)] = normalize_dt(f"{year}-{month}-{day}T00:00:00+08:00")
+    return out
+
+
+def _rica_ms_to_iso(value: object) -> str | None:
+    if isinstance(value, (int, float)) and value > 0:
+        try:
+            return (
+                datetime.fromtimestamp(value / 1000, tz=timezone.utc)
+                .astimezone(HKT)
+                .replace(microsecond=0)
+                .isoformat()
+            )
+        except (OverflowError, OSError, ValueError):
+            return None
+    return None
+
+
+def _rica_flat(raw: object) -> str:
+    if not isinstance(raw, str) or not raw.strip():
+        return ""
+    match = re.search(r"([A-Za-z])\s*$", raw.strip()) or re.search(r"Flat\s*([A-Za-z])", raw, re.I)
+    if match:
+        return f"{match.group(1).upper()}室"
+    return raw.strip()
+
+
+def parse_ricacorp() -> list[dict]:
+    """Scrape Ricacorp SSR transfer-state for 屯門市廣場 rentals."""
+    status, body, _ = fetch_with_retries(
+        RICACORP_LIST_URL,
+        headers={"Accept-Language": "zh-HK", "Accept": "text/html"},
+    )
+    if status != 200 or not body:
+        raise RuntimeError(f"Ricacorp HTTP {status}")
+    html = body.decode("utf-8", "replace")
+    state = _rica_transfer_state(html)
+    if not state:
+        raise RuntimeError("Ricacorp transfer-state missing")
+    rows = state.get("POSTS") or []
+    if not isinstance(rows, list):
+        raise RuntimeError("Ricacorp POSTS missing")
+    total = state.get("POSTSTOTAL")
+    ad_dates = _rica_ad_dates(html)
+    listings: list[dict] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        rent = row.get("marketPrice")
+        if not isinstance(rent, int) or rent <= 0:
+            continue
+        # agreementType 5 = rent on Ricacorp; skip sale if mixed
+        agreement = str(row.get("agreementType") or "")
+        if agreement and agreement not in {"5", "rent", "Rent"}:
+            # still accept when marketPrice present and alias ends with -5-hk
+            alias = str(row.get("aliasV4") or row.get("alias") or "")
+            if "-5-hk" not in alias and "-5-" not in alias:
+                continue
+        post_no = str(row.get("postNo") or row.get("id") or "")
+        if not post_no:
+            continue
+        display = (
+            row.get("displayTextHk")
+            or row.get("displayText")
+            or ESTATE
+        )
+        floor = str(row.get("floorZoneText") or "").strip()
+        flat = _rica_flat(row.get("flatZoneTextEn"))
+        loc = row.get("publicLocationNamesHk") or []
+        building = ""
+        phase = ""
+        if isinstance(loc, list) and loc:
+            for part in loc:
+                if not isinstance(part, str):
+                    continue
+                if re.search(r"\d+\s*座", part):
+                    building = part.strip()
+                phase_match = re.search(r"(\d+\s*期)", part)
+                if phase_match:
+                    phase = phase_match.group(1)
+        address = " ".join(
+            part for part in [phase, building or "", floor, flat] if part
+        ).strip()
+        if not address:
+            address = str(display).replace(ESTATE, "").strip()
+        bedrooms = row.get("room") if isinstance(row.get("room"), int) else None
+        area = saleable_sqft(row.get("saleableArea"))
+        alias = str(row.get("aliasV4") or row.get("alias") or "")
+        detail_url = (
+            f"https://www.ricacorp.com/zh-hk/property/detail/{urllib.parse.quote(alias, safe='-._~')}"
+            if alias
+            else RICACORP_LIST_URL
+        )
+        image = (
+            row.get("thumbnailDesktop")
+            or row.get("thumbnail")
+            or row.get("thumbnailMobile")
+            or ""
+        )
+        if isinstance(image, str) and " " in image:
+            image = image.split()[0]
+        listings.append(
+            {
+                "source": "ricacorp",
+                "source_name": "利嘉閣",
+                "listing_id": post_no,
+                "title": str(display).strip() or ESTATE,
+                "address": address,
+                "rent_hkd": rent,
+                "area_sqft": area,
+                "rent_per_sqft": rent_per_sqft(rent, area),
+                "room_type": room_label(bedrooms),
+                "bedrooms": bedrooms,
+                "image_remote": image if isinstance(image, str) else "",
+                "url": detail_url,
+                "published_at": ad_dates.get(post_no),
+                "updated_at": _rica_ms_to_iso(row.get("overallDateModified")),
+                "scraped_at": SCRAPED_AT,
+            }
+        )
+    if total is not None and int(total) != len(rows):
+        print(f"ricacorp declared {total}, rows {len(rows)}", flush=True)
+    if state.get("POSTSHASMORE"):
+        print("ricacorp has more pages; only first SSR page scraped", flush=True)
+    return listings
+
+
 def unit_key(listing: dict) -> str | None:
     text = f"{listing.get('title') or ''} {listing.get('address') or ''}"
     block = re.search(r"(\d+)\s*座", text)
@@ -598,6 +782,11 @@ def write_data(listings: list[dict]) -> None:
                     "name": "中原地產",
                     "url": "https://hk.centanet.com/findproperty/list/rent/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_3-NXLIIHSSHT",
                 },
+                {
+                    "id": "ricacorp",
+                    "name": "利嘉閣",
+                    "url": "https://www.ricacorp.com/zh-hk/property/list/rent/%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-bigest-%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-hma-hk",
+                },
             ],
         },
         "listings": listings,
@@ -609,7 +798,12 @@ def write_data(listings: list[dict]) -> None:
 def main() -> None:
     errors: list[str] = []
     collected: list[dict] = []
-    for name, parser in (("28hse", parse_28hse), ("midland", parse_midland), ("centanet", parse_centanet)):
+    for name, parser in (
+        ("28hse", parse_28hse),
+        ("midland", parse_midland),
+        ("centanet", parse_centanet),
+        ("ricacorp", parse_ricacorp),
+    ):
         try:
             rows = parser()
             print(f"{name}: {len(rows)}")
@@ -617,11 +811,17 @@ def main() -> None:
         except Exception as exc:
             errors.append(f"{name}: {exc}")
             print(f"{name} FAILED: {exc}")
+    collected, removed_block8 = exclude_block_8(collected)
+    print(f"excluded block 8: {removed_block8}", flush=True)
     listings = dedupe(collected)
+    # Safety: never ship 8座 even if dedupe somehow reintroduced address text
+    listings, removed_after = exclude_block_8(listings)
+    if removed_after:
+        print(f"excluded block 8 after dedupe: {removed_after}", flush=True)
     cache_images(listings)
     write_data(listings)
-    print(f"cards {len(listings)} errors {errors}")
-    for source in ("28hse", "midland", "centanet"):
+    print(f"cards {len(listings)} errors {errors} block8_removed {removed_block8 + removed_after}")
+    for source in ("28hse", "midland", "centanet", "ricacorp"):
         rows = [item for item in listings if item.get("source") == source]
         published = sum(1 for item in rows if item.get("published_at"))
         updated = sum(1 for item in rows if item.get("updated_at"))

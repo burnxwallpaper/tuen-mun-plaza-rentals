@@ -1,6 +1,6 @@
 # 屯門市廣場 租盤
 
-仍在放租的屯門市廣場單位，彙整 28Hse、美聯物業、中原地產。頁面讀 `data/listings.json`，圖片在 `images/`。
+仍在放租的屯門市廣場單位，彙整 28Hse、美聯物業、中原地產、利嘉閣。頁面讀 `data/listings.json`，圖片在 `images/`。資料會排除全部 8座（第3期）單位。
 
 網站：https://burnxwallpaper.github.io/tuen-mun-plaza-rentals/
 
@@ -30,7 +30,7 @@ python -m http.server 8080
 
 每張卡有圖片、來源連結、租金（港元）、房型，以及來源名稱、標題／地址（有就顯示）。
 
-每條樓盤另有 `published_at`（刊登日期）和 `updated_at`（更新日期），皆為香港時間 ISO。來源沒有該日期時為 `null`，卡片不顯示該行。`scraped_at` 仍是本次抓取時間。中原取搜尋結果的 `publishDate`／`updateDate`；美聯的 `updated_at` 取列表 `update_date`，`published_at` 取樓盤頁 `first_pub_date`；28Hse 取樓盤頁 JSON-LD 的 `datePublished`／`dateModified`。
+每條樓盤另有 `published_at`（刊登日期）和 `updated_at`（更新日期），皆為香港時間 ISO。來源沒有該日期時為 `null`，卡片不顯示該行。`scraped_at` 仍是本次抓取時間。中原取搜尋結果的 `publishDate`／`updateDate`；美聯的 `updated_at` 取列表 `update_date`，`published_at` 取樓盤頁 `first_pub_date`；28Hse 取樓盤頁 JSON-LD 的 `datePublished`／`dateModified`；利嘉閣 `published_at` 取列表「廣告日期」，`updated_at` 取 SSR `overallDateModified`。
 
 座數、樓層（高／中／低）、單位字母、房數都齊，而且租金相差不超過 15% 時，會併成一張卡並保留各來源連結。合併卡嘅刊登日取組內最早非空值，更新日取最晚非空值。對不上的盤各自保留。
 
@@ -39,6 +39,7 @@ python -m http.server 8080
 - 28Hse：https://www.28hse.com/rent/a3/dg48/c4433
 - 美聯：https://www.midland.com.hk/zh-hk/list/rent/屯門市廣場-E-E00091
 - 中原：https://hk.centanet.com/findproperty/list/rent/屯門市廣場_3-NXLIIHSSHT
+- 利嘉閣：https://www.ricacorp.com/zh-hk/property/list/rent/屯門市廣場-bigest-屯門市中心-hma-hk
 
 ## 更新並推上網站
 
@@ -51,7 +52,7 @@ git commit -m "Update rental listings"
 git push origin main
 ```
 
-`refresh.py` 只用 Python 3 標準庫。它會重抓三個來源仍在放租的盤、下載缺的圖片，並覆寫 `data/listings.json`。`index.html` 不用改。推上 `main` 後 GitHub Pages 會重新發布。
+`refresh.py` 只用 Python 3 標準庫。它會重抓四個來源仍在放租的盤、排除 8座、下載缺的圖片，並覆寫 `data/listings.json`。推上 `main` 後 GitHub Pages 會重新發布。
 
 ## 抓取頻率
 

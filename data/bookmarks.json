@@ -1,0 +1,4 @@
+{
+  "keys": ["CEA208", "CFE131", "CGH466", "CIK891"],
+  "note": "Repo default bookmarks. The page merges a localStorage overlay on top (added/removed). refresh.py does not rewrite this file. Keys are Centaline refNo values, or a listing URL with the query string removed."
+}

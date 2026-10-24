@@ -46,6 +46,17 @@ img, .ph { width:100%; height:170px; object-fit:cover; background:#e7e5e4; displ
 a.cardlink { color: inherit; text-decoration: none; }
 a.more, a.source { color:#9a3412; font-size:13px; }
 .status { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; color: var(--muted); }
+article { position: relative; }
+article.bookmarked { border-color: #d97706; box-shadow: inset 0 0 0 1px #d97706; }
+article.over-budget { border-style: dashed; border-color: #9a3412; }
+button.star {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  width: 36px; height: 36px; padding: 0; border-radius: 999px;
+  background: rgba(255,255,255,.94); color: #57534e; font-size: 18px; line-height: 34px; text-align: center;
+}
+button.star.on { background: #fffbeb; color: #b45309; border-color: #d97706; }
+.overcap { color: #9a3412; font-size: 13px; font-weight: 600; }
+.bookmark-note { color: var(--muted); font-size: 13px; margin: 0; }
 </style>
 </head>
 <body>
@@ -69,6 +80,8 @@ a.more, a.source { color:#9a3412; font-size:13px; }
     <div class="filters" id="estates"></div>
     <div class="filters" id="rooms"></div>
     <div class="filters" id="filters"></div>
+    <div class="filters" id="bookmarks"></div>
+    <p class="bookmark-note" id="bookmark-note" hidden></p>
     <div class="medians" id="medians" hidden></div>
     <p class="shown" id="shown"></p>
   </div>
@@ -101,12 +114,20 @@ const sortEl = document.getElementById("sort");
 const shownEl = document.getElementById("shown");
 const mediansEl = document.getElementById("medians");
 const statusEl = document.getElementById("status");
+const bookmarksEl = document.getElementById("bookmarks");
+const bookmarkNoteEl = document.getElementById("bookmark-note");
 let listings = [];
 let estateFilter = "all";
 let sourceFilter = "all";
 let roomFilter = "all";
 let sortKey = "updated_desc";
 let dataAsOf = null;
+let bookmarkOnly = false;
+let rentCap = 14001;
+const LS_BOOKMARKS = "tmtp-bookmarks-v1";
+let jsonKeys = new Set();
+let addedKeys = new Set();
+let removedKeys = new Set();
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, ch => ({
@@ -202,6 +223,13 @@ function formatUpdated(iso) {
 }
 
 function card(item) {
+  const starred = isBookmarked(item);
+  const classes = [];
+  if (starred) classes.push("bookmarked");
+  if (overBudget(item)) classes.push("over-budget");
+  const star = '<button type="button" class="star' + (starred ? " on" : "") + '" data-key="' +
+    esc(canonicalKey(item)) + '" aria-pressed="' + (starred ? "true" : "false") + '" aria-label="' +
+    (starred ? "移除書籤" : "加入書籤") + '">' + (starred ? "★" : "☆") + "</button>";
   const img = item.image
     ? '<img src="' + esc(item.image) + '" alt="" loading="lazy" decoding="async" width="400" height="170">'
     : '<div class="ph">沒有圖片</div>';
@@ -222,6 +250,7 @@ function card(item) {
   const rent = item.rent_hkd
     ? ("HK$" + Number(item.rent_hkd).toLocaleString("zh-HK"))
     : "租金未列明";
+  const overLine = overBudget(item) ? '<div class="overcap">超出預算</div>' : "";
   const psf = psfValue(item);
   const psfLine = psf != null
     ? '<div class="room">尺價 HK$' + Number(psf).toLocaleString("zh-HK", {
@@ -232,9 +261,12 @@ function card(item) {
   const areaLine = (typeof item.area_sqft === "number" && item.area_sqft > 0)
     ? '<div class="when">實用 ' + Number(item.area_sqft).toLocaleString("zh-HK") + " 呎</div>"
     : "";
-  return '<article data-sources="' + esc(sourcesOf(item).join("|")) + '">' +
+  return '<article' + (classes.length ? ' class="' + classes.join(" ") + '"' : "") +
+    ' data-sources="' + esc(sourcesOf(item).join("|")) + '">' +
+    star +
     '<a class="cardlink" href="' + esc(item.url) + '" target="_blank" rel="noopener">' + img + "</a>" +
     '<div class="body"><div class="rent">' + rent + "</div>" +
+    overLine +
     psfLine +
     '<div class="room">' + esc(item.room_type || "未列明") + "</div>" +
     areaLine +
@@ -282,6 +314,155 @@ function matchesRoom(item, room) {
   return room === "all" || roomBucket(item) === room;
 }
 
+/*
+  Bookmarks.
+  data/bookmarks.json keys are the repo defaults and survive refresh.py rewriting listings.json.
+  localStorage "tmtp-bookmarks-v1" is an overlay {added:[], removed:[]} written only after a star
+  toggle. Effective set = (defaults ∪ added) − removed.
+  A card matches a Centaline refNo (listing_id or _REF in the URL, including also_listed) or the
+  card URL with the query removed. The star stores the primary Centaline ref when present,
+  otherwise the query-less primary URL.
+
+  Rent cap.
+  The main feed, filter counts, and medians include a card only when rent_hkd is positive and
+  rent_hkd <= rentCap (default 14001, overridable via meta.rent_cap_hkd). Unknown rent is hidden.
+  A bookmarked card above the cap stays out of that stock and shows only while 「書籤」 is on,
+  with an 「超出預算」 note.
+*/
+function normalizeUrl(url) {
+  const raw = String(url || "").trim();
+  if (!raw) return "";
+  try {
+    const parsed = new URL(raw);
+    const path = decodeURIComponent(parsed.pathname).replace(/\/+$/, "");
+    return parsed.origin + path;
+  } catch (err) {
+    return raw.split("#")[0].split("?")[0];
+  }
+}
+
+function centanetRef(source, listingId, url) {
+  const href = String(url || "");
+  const isCenta = source === "centanet" || /centanet\.com/i.test(href);
+  if (!isCenta) return "";
+  const id = String(listingId || "").trim();
+  if (/^[A-Za-z]{2,4}\d{3,}$/.test(id)) return id.toUpperCase();
+  let decoded = href;
+  try {
+    decoded = decodeURIComponent(href);
+  } catch (err) {
+    decoded = href;
+  }
+  const match = decoded.match(/_([A-Za-z]{2,4}\d{3,})(?:[/?#]|$)/);
+  return match ? match[1].toUpperCase() : "";
+}
+
+function normalizeStoredKey(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  if (/^[A-Za-z]{2,4}\d{3,}$/.test(text)) return text.toUpperCase();
+  if (/^https?:/i.test(text)) return normalizeUrl(text);
+  return text;
+}
+
+function cardKeys(item) {
+  const keys = [];
+  const push = (source, id, url) => {
+    const ref = centanetRef(source, id, url);
+    if (ref && !keys.includes(ref)) keys.push(ref);
+    const norm = normalizeUrl(url);
+    if (norm && !keys.includes(norm)) keys.push(norm);
+  };
+  push(item.source, item.listing_id, item.url);
+  (item.also_listed || []).forEach(extra => push(extra.source, extra.listing_id, extra.url));
+  return keys;
+}
+
+function canonicalKey(item) {
+  return centanetRef(item.source, item.listing_id, item.url) || normalizeUrl(item.url) || String(item.listing_id || "").trim();
+}
+
+function loadBookmarkOverlay() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LS_BOOKMARKS) || "null");
+    const added = raw && Array.isArray(raw.added) ? raw.added : [];
+    const removed = raw && Array.isArray(raw.removed) ? raw.removed : [];
+    addedKeys = new Set(added.map(normalizeStoredKey).filter(Boolean));
+    removedKeys = new Set(removed.map(normalizeStoredKey).filter(Boolean));
+  } catch (err) {
+    addedKeys = new Set();
+    removedKeys = new Set();
+  }
+}
+
+function persistBookmarkOverlay() {
+  localStorage.setItem(LS_BOOKMARKS, JSON.stringify({
+    added: Array.from(addedKeys),
+    removed: Array.from(removedKeys)
+  }));
+}
+
+function applyBookmarkPayload(payload) {
+  const raw = Array.isArray(payload) ? payload : ((payload && payload.keys) || []);
+  jsonKeys = new Set(raw.map(normalizeStoredKey).filter(Boolean));
+}
+
+function effectiveBookmarkKeys() {
+  const keys = new Set(jsonKeys);
+  addedKeys.forEach(key => keys.add(key));
+  removedKeys.forEach(key => keys.delete(key));
+  return keys;
+}
+
+function isBookmarked(item) {
+  const effective = effectiveBookmarkKeys();
+  return cardKeys(item).some(key => effective.has(key));
+}
+
+function toggleBookmark(item) {
+  const keys = cardKeys(item);
+  if (isBookmarked(item)) {
+    keys.forEach(key => {
+      addedKeys.delete(key);
+      if (jsonKeys.has(key)) removedKeys.add(key);
+    });
+  } else {
+    const key = canonicalKey(item);
+    if (!key) return;
+    if (jsonKeys.has(key)) removedKeys.delete(key);
+    else addedKeys.add(key);
+    keys.forEach(match => {
+      if (jsonKeys.has(match)) removedKeys.delete(match);
+    });
+  }
+  persistBookmarkOverlay();
+}
+
+function missingBookmarkKeys() {
+  const present = new Set();
+  listings.forEach(item => cardKeys(item).forEach(key => present.add(key)));
+  return Array.from(effectiveBookmarkKeys()).filter(key => !present.has(key));
+}
+
+function inBudget(item) {
+  const rent = rentValue(item);
+  return rent != null && rent > 0 && rent <= rentCap;
+}
+
+function overBudget(item) {
+  const rent = rentValue(item);
+  return rent != null && rent > rentCap;
+}
+
+function inView(item, skip) {
+  if (!inBudget(item)) return false;
+  if (skip !== "bookmark" && bookmarkOnly && !isBookmarked(item)) return false;
+  if (skip !== "estate" && !matchesEstate(item, estateFilter)) return false;
+  if (skip !== "source" && !matchesSource(item, sourceFilter)) return false;
+  if (skip !== "room" && !matchesRoom(item, roomFilter)) return false;
+  return true;
+}
+
 function timeValue(iso) {
   if (!iso) return null;
   const time = Date.parse(iso);
@@ -323,11 +504,15 @@ function compareMissingLast(left, right) {
 function visibleListings() {
   return listings
     .map((item, index) => ({ item, index }))
-    .filter(({ item }) =>
-      matchesEstate(item, estateFilter) &&
-      matchesSource(item, sourceFilter) &&
-      matchesRoom(item, roomFilter)
-    )
+    .filter(({ item }) => {
+      const capped = inBudget(item);
+      const starredOver = bookmarkOnly && overBudget(item) && isBookmarked(item);
+      if (!capped && !starredOver) return false;
+      if (bookmarkOnly && !isBookmarked(item)) return false;
+      return matchesEstate(item, estateFilter) &&
+        matchesSource(item, sourceFilter) &&
+        matchesRoom(item, roomFilter);
+    })
     .sort((left, right) => {
       const diff = compareMissingLast(sortValue(left.item), sortValue(right.item));
       return diff || left.index - right.index;
@@ -344,9 +529,7 @@ function optionButtons(options, attr, selected) {
 }
 
 function buildEstateFilters() {
-  const pool = listings.filter(item =>
-    matchesSource(item, sourceFilter) && matchesRoom(item, roomFilter)
-  );
+  const pool = listings.filter(item => inView(item, "estate"));
   const counts = {};
   pool.forEach(item => {
     const name = estateOf(item);
@@ -366,9 +549,7 @@ function buildEstateFilters() {
 }
 
 function buildRoomFilters() {
-  const pool = listings.filter(item =>
-    matchesEstate(item, estateFilter) && matchesSource(item, sourceFilter)
-  );
+  const pool = listings.filter(item => inView(item, "room"));
   const counts = {};
   pool.forEach(item => {
     const bucket = roomBucket(item);
@@ -386,9 +567,7 @@ function buildRoomFilters() {
 }
 
 function buildSourceFilters() {
-  const pool = listings.filter(item =>
-    matchesEstate(item, estateFilter) && matchesRoom(item, roomFilter)
-  );
+  const pool = listings.filter(item => inView(item, "source"));
   const counts = {};
   pool.forEach(item => {
     new Set(sourcesOf(item)).forEach(name => {
@@ -446,7 +625,9 @@ function filterNote() {
     : ((ROOM_OPTIONS.find(option => option.id === roomFilter) || {}).label || roomFilter);
   const source = sourceFilter === "all" ? "全部來源" : sourceFilter;
   const estate = estateFilter === "all" ? "全部屋苑" : estateLabel(estateFilter);
-  return "跟住篩選：" + estate + " · " + room + " · " + source + "。只計每張卡片嘅租金。";
+  const bookmark = bookmarkOnly ? " · 書籤" : "";
+  return "跟住篩選：" + estate + " · " + room + " · " + source + bookmark +
+    "。只計每張卡片嘅租金（高過 HK$" + rentCap.toLocaleString("zh-HK") + " 唔計）。";
 }
 
 function psfFilterNote() {
@@ -455,7 +636,9 @@ function psfFilterNote() {
     : ((ROOM_OPTIONS.find(option => option.id === roomFilter) || {}).label || roomFilter);
   const source = sourceFilter === "all" ? "全部來源" : sourceFilter;
   const estate = estateFilter === "all" ? "全部屋苑" : estateLabel(estateFilter);
-  return "跟住篩選：" + estate + " · " + room + " · " + source + "。只計有實用面積、非分間房嘅卡片。";
+  const bookmark = bookmarkOnly ? " · 書籤" : "";
+  return "跟住篩選：" + estate + " · " + room + " · " + source + bookmark +
+    "。只計有實用面積、非分間房，而且租金唔高過上限嘅卡片。";
 }
 
 function meanOf(values) {
@@ -491,11 +674,7 @@ function renderMedians() {
   const recentRents = [];
   const allPsf = [];
   listings.forEach(item => {
-    if (
-      !matchesEstate(item, estateFilter) ||
-      !matchesSource(item, sourceFilter) ||
-      !matchesRoom(item, roomFilter)
-    ) return;
+    if (!inView(item, "")) return;
     const rent = rentValue(item);
     if (rent != null) {
       allRents.push(rent);
@@ -530,10 +709,34 @@ function renderMedians() {
     "</div>";
 }
 
+function buildBookmarkFilter() {
+  const count = listings.filter(item =>
+    isBookmarked(item) &&
+    (inBudget(item) || overBudget(item)) &&
+    matchesEstate(item, estateFilter) &&
+    matchesSource(item, sourceFilter) &&
+    matchesRoom(item, roomFilter)
+  ).length;
+  bookmarksEl.innerHTML = '<span class="rowlabel">書籤</span>' +
+    '<button type="button" data-bookmark="toggle" aria-pressed="' + (bookmarkOnly ? "true" : "false") + '"' +
+    (bookmarkOnly ? ' class="on"' : "") + ">書籤 " + count + "</button>";
+  const missing = missingBookmarkKeys();
+  if (!missing.length) {
+    bookmarkNoteEl.hidden = true;
+    bookmarkNoteEl.textContent = "";
+    return;
+  }
+  bookmarkNoteEl.hidden = false;
+  bookmarkNoteEl.textContent = "已下架書籤：" + missing.join("、");
+}
+
 function render() {
   const rows = visibleListings();
-  grid.innerHTML = rows.map(card).join("") || '<p class="empty">沒有符合條件的樓盤</p>';
-  shownEl.textContent = "顯示 " + rows.length + " 個";
+  const overCount = rows.filter(overBudget).length;
+  const empty = bookmarkOnly ? "沒有書籤" : "沒有符合條件的樓盤";
+  grid.innerHTML = rows.map(card).join("") || '<p class="empty">' + empty + "</p>";
+  shownEl.textContent = "顯示 " + rows.length + " 個" +
+    (overCount ? "（" + overCount + " 個超出預算）" : "");
   renderMedians();
 }
 
@@ -541,6 +744,7 @@ function refreshControls() {
   buildEstateFilters();
   buildRoomFilters();
   buildSourceFilters();
+  buildBookmarkFilter();
   render();
 }
 
@@ -570,18 +774,46 @@ filters.addEventListener("click", event => {
   refreshControls();
 });
 
-fetch("./data/listings.json")
-  .then(response => {
+bookmarksEl.addEventListener("click", event => {
+  const button = event.target.closest("button");
+  if (!button || !bookmarksEl.contains(button)) return;
+  bookmarkOnly = !bookmarkOnly;
+  refreshControls();
+});
+
+grid.addEventListener("click", event => {
+  const button = event.target.closest("button.star");
+  if (!button || !grid.contains(button)) return;
+  const key = button.dataset.key || "";
+  const item = listings.find(entry => canonicalKey(entry) === key || cardKeys(entry).includes(key));
+  if (!item) return;
+  toggleBookmark(item);
+  refreshControls();
+});
+
+function loadJson(url) {
+  return fetch(url).then(response => {
     if (!response.ok) throw new Error("HTTP " + response.status);
     return response.json();
-  })
-  .then(payload => {
+  });
+}
+
+loadBookmarkOverlay();
+Promise.all([
+  loadJson("./data/listings.json"),
+  loadJson("./data/bookmarks.json").catch(() => ({ keys: [] }))
+])
+  .then(([payload, bookmarkPayload]) => {
+    applyBookmarkPayload(bookmarkPayload);
     listings = Array.isArray(payload.listings) ? payload.listings : [];
     const meta = payload.meta || {};
+    if (typeof meta.rent_cap_hkd === "number" && meta.rent_cap_hkd > 0) rentCap = meta.rent_cap_hkd;
     const parsedAsOf = meta.updated_at ? new Date(meta.updated_at) : null;
     dataAsOf = parsedAsOf && !Number.isNaN(parsedAsOf.getTime()) ? parsedAsOf : null;
     const updated = formatUpdated(meta.updated_at);
-    metaEl.textContent = "共 " + listings.length + " 個卡片" +
+    const stockCount = listings.filter(inBudget).length;
+    metaEl.textContent = "共 " + stockCount + " 個卡片" +
+      " · 租金上限 HK$" + rentCap.toLocaleString("zh-HK") +
       (updated ? " · 更新日期 " + updated + "（香港時間）" : "") +
       (meta.search_key ? " · 搜尋「" + meta.search_key + "」" : "");
     refreshControls();

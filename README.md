@@ -18,14 +18,17 @@ python -m http.server 8080
 
 ## 資料
 
-`data/listings.json` 是唯一的樓盤檔，形狀是 `{ "meta", "listings" }`。
+`data/listings.json` 是樓盤檔，形狀是 `{ "meta", "listings" }`。書籤另見 `data/bookmarks.json`，`refresh.py` 唔會覆寫佢。
 
 `meta` 包含：
 
 - `updated_at`：香港時間 ISO（例如 `2026-09-26T00:35:32+08:00`）
 - `search_key`：兩個屋苑名稱
 - `estate_counts`：各屋苑卡片數
-- `card_count`：畫面上的卡片數（跨來源合併後）
+- `card_count`：寫入檔案嘅卡片數（已套租金上限；超出預算但保留嘅書籤都計入）
+- `rent_cap_hkd`：租金上限，而家係 14001
+- `excluded_over_cap`：今次因為高過上限而冇寫入嘅卡數
+- `excluded_unknown_rent`：未知或非正租金而冇寫入嘅卡數
 - `source_counts`：各來源出現次數（合併卡上的「同時見於」也計入，所以合計可以大於卡片數）
 - `primary_counts`：每張卡主來源的數量
 
@@ -55,7 +58,21 @@ git commit -m "Update rental listings"
 git push origin main
 ```
 
-`refresh.py` 只用 Python 3 標準庫。它會重抓四個來源仍在放租的盤、排除 8座、下載缺的圖片，並覆寫 `data/listings.json`。推上 `main` 後 GitHub Pages 會重新發布。
+`refresh.py` 只用 Python 3 標準庫。它會重抓四個來源仍在放租的盤、排除 8座、下載缺的圖片，並覆寫 `data/listings.json`。推上 `main` 後 GitHub Pages 會重新發布。`data/bookmarks.json` 要一併保留。
+
+## 書籤
+
+`data/bookmarks.json` 的 `keys` 是預設書籤，而家係中原編號 `CEA208`、`CFE131`、`CGH466`、`CIK891`。頁面用 `listing_id` 或網址入面嘅 `_編號` 對卡（包括合併卡嘅「同時見於」），唔睇 `theme` query。其他來源用去掉 query 嘅網址做鍵。
+
+載入時：有效書籤 =（`bookmarks.json` ∪ localStorage `added`）− localStorage `removed`。localStorage 鍵名 `tmtp-bookmarks-v1`，只在撳星之後先寫。未撳過就跟檔案預設，四張卡會即時顯示實心星。之後喺檔案加新編號，只要冇被本機剔走过，都會自動出現。
+
+每張卡有星掣。篩選列有「書籤」，只顯示已加星嘅卡。已經唔喺 `listings.json` 嘅鍵會顯示「已下架書籤」。
+
+## 租金上限
+
+主列表、中位數、屋苑／房數／來源計數只保留已知租金而且 ≤ HK$14,001 嘅卡。未知、0、或高過 14001 嘅盤唔會出現喺主列表。而家呢份資料冇未知租金。
+
+`refresh.py` 寫 `listings.json` 時用同一條規則（`meta.rent_cap_hkd`、`meta.excluded_over_cap`）。如果一個書籤高過上限，因為佢喺 `bookmarks.json`，資料會保留佢，但主列表仍然唔顯示；開「書籤」先見到，並標「超出預算」。CEA208（HK$13,500）、CFE131（HK$13,000）、CGH466（HK$12,500）、CIK891（HK$12,500）都未超過上限。
 
 ## 抓取頻率
 

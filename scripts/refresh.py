@@ -1,7 +1,12 @@
 """Refresh active rental listings for 屯門市廣場 + 屯門時代廣場 into data/listings.json.
 
 Sources: 28hse, Midland Realty, Centaline, Ricacorp (利嘉閣). Stdlib only.
-index.html fetches data/listings.json; this script does not rewrite the page.
+index.html fetches data/listings.json; this script does not rewrite the page
+or data/bookmarks.json.
+
+Cards with unknown rent, non-positive rent, or rent above RENT_CAP_HKD are
+omitted. A card above the cap is kept only when it matches a key in
+data/bookmarks.json, so the page can still show it under the 書籤 filter.
 """
 
 from __future__ import annotations
@@ -19,6 +24,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 IMAGES = ROOT / "images"
 DATA_PATH = ROOT / "data" / "listings.json"
+BOOKMARKS_PATH = ROOT / "data" / "bookmarks.json"
+# Keep a listing when its displayed rent is known and at most this many HKD.
+RENT_CAP_HKD = 14001
 HKT = timezone(timedelta(hours=8))
 UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -848,12 +856,129 @@ def estate_counts(listings: list[dict]) -> dict[str, int]:
     return counts
 
 
-def write_data(listings: list[dict]) -> None:
+def positive_rent(listing: dict) -> int | None:
+    rent = listing.get("rent_hkd")
+    if isinstance(rent, bool) or not isinstance(rent, int) or rent <= 0:
+        return None
+    return rent
+
+
+def normalize_url(url: object) -> str:
+    """Listing URL without query or fragment. Host is lowercased; path is decoded."""
+    if not isinstance(url, str):
+        return ""
+    raw = url.strip()
+    if not raw:
+        return ""
+    parts = urllib.parse.urlsplit(raw)
+    if not parts.scheme or not parts.netloc:
+        return raw.split("#", 1)[0].split("?", 1)[0]
+    path = urllib.parse.unquote(parts.path).rstrip("/")
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc.lower(), path, "", ""))
+
+
+def centanet_ref(source: object, listing_id: object, url: object) -> str:
+    href = url if isinstance(url, str) else ""
+    is_centanet = source == "centanet" or "centanet.com" in href.lower()
+    if not is_centanet:
+        return ""
+    if isinstance(listing_id, str) and re.fullmatch(r"[A-Za-z]{2,4}\d{3,}", listing_id.strip()):
+        return listing_id.strip().upper()
+    decoded = urllib.parse.unquote(href)
+    match = re.search(r"_([A-Za-z]{2,4}\d{3,})(?:[/?#]|$)", decoded)
+    if match:
+        return match.group(1).upper()
+    return ""
+
+
+def listing_bookmark_keys(listing: dict) -> set[str]:
+    """Keys that can match data/bookmarks.json for this card, including merged sources."""
+    keys: set[str] = set()
+
+    def add(source: object, listing_id: object, url: object) -> None:
+        ref = centanet_ref(source, listing_id, url)
+        if ref:
+            keys.add(ref)
+        norm = normalize_url(url)
+        if norm:
+            keys.add(norm)
+
+    add(listing.get("source"), listing.get("listing_id"), listing.get("url"))
+    for extra in listing.get("also_listed") or []:
+        if isinstance(extra, dict):
+            add(extra.get("source"), extra.get("listing_id"), extra.get("url"))
+    return keys
+
+
+def normalize_bookmark_key(value: object) -> str:
+    if not isinstance(value, str):
+        return ""
+    text = value.strip()
+    if not text:
+        return ""
+    if re.fullmatch(r"[A-Za-z]{2,4}\d{3,}", text):
+        return text.upper()
+    if text.lower().startswith("http://") or text.lower().startswith("https://"):
+        return normalize_url(text)
+    return text
+
+
+def load_bookmark_keys() -> set[str]:
+    """Repo defaults only. Visitor localStorage overlays are applied in the browser."""
+    if not BOOKMARKS_PATH.exists():
+        return set()
+    try:
+        payload = json.loads(BOOKMARKS_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    raw = payload.get("keys") if isinstance(payload, dict) else payload
+    if not isinstance(raw, list):
+        return set()
+    return {key for item in raw if (key := normalize_bookmark_key(item))}
+
+
+def apply_rent_cap(
+    listings: list[dict], bookmark_keys: set[str] | None = None
+) -> tuple[list[dict], dict[str, int]]:
+    """Drop unknown rents and rents above RENT_CAP_HKD.
+
+    Bookmarked over-cap cards stay in the file so index.html can show them
+    under 書籤 only. Unknown rent is always dropped.
+    """
+    if bookmark_keys is None:
+        bookmark_keys = load_bookmark_keys()
+    kept: list[dict] = []
+    stats = {"over_cap": 0, "unknown_rent": 0, "kept_bookmarked_over_cap": 0}
+    for listing in listings:
+        rent = positive_rent(listing)
+        if rent is None:
+            stats["unknown_rent"] += 1
+            continue
+        if rent <= RENT_CAP_HKD:
+            kept.append(listing)
+            continue
+        if listing_bookmark_keys(listing) & bookmark_keys:
+            stats["kept_bookmarked_over_cap"] += 1
+            kept.append(listing)
+            continue
+        stats["over_cap"] += 1
+    return kept, stats
+
+
+def write_data(
+    listings: list[dict],
+    *,
+    excluded_over_cap: int = 0,
+    excluded_unknown_rent: int = 0,
+) -> None:
     payload = {
         "meta": {
             "updated_at": datetime.now(HKT).replace(microsecond=0).isoformat(),
             "search_key": "／".join(str(item["name"]) for item in ESTATES),
             "card_count": len(listings),
+            "rent_cap_hkd": RENT_CAP_HKD,
+            "excluded_over_cap": excluded_over_cap,
+            "excluded_unknown_rent": excluded_unknown_rent,
             "estate_counts": estate_counts(listings),
             "source_counts": appearance_counts(listings),
             "primary_counts": primary_counts(listings),
@@ -921,8 +1046,19 @@ def main() -> None:
     listings, removed_after = exclude_tmtp_block_8(listings)
     if removed_after:
         print(f"excluded TMTP block 8 after dedupe: {removed_after}", flush=True)
+    listings, cap_stats = apply_rent_cap(listings)
+    print(
+        f"rent cap {RENT_CAP_HKD}: dropped over {cap_stats['over_cap']}, "
+        f"dropped unknown {cap_stats['unknown_rent']}, "
+        f"kept bookmarked over {cap_stats['kept_bookmarked_over_cap']}",
+        flush=True,
+    )
     cache_images(listings)
-    write_data(listings)
+    write_data(
+        listings,
+        excluded_over_cap=cap_stats["over_cap"],
+        excluded_unknown_rent=cap_stats["unknown_rent"],
+    )
     print(
         f"cards {len(listings)} errors {errors} "
         f"tmtp_block8_removed {removed_block8 + removed_after}"

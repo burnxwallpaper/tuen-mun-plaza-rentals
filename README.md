@@ -62,9 +62,9 @@ git push origin main
 
 ## 書籤
 
-`data/bookmarks.json` 的 `keys` 是預設書籤，而家係中原編號 `CEA208`、`CFE131`、`CGH466`、`CIK891`。頁面用 `listing_id` 或網址入面嘅 `_編號` 對卡（包括合併卡嘅「同時見於」），唔睇 `theme` query。其他來源用去掉 query 嘅網址做鍵。
+`data/bookmarks.json` 的 `keys` 是預設書籤，而家係中原編號 `CEA208`、`CFE131`、`CGH466`、`CIK891`、`CGB713`。頁面用 `listing_id` 或網址入面嘅 `_編號` 對卡（包括合併卡嘅「同時見於」），唔睇 `theme` query。其他來源用去掉 query 嘅網址做鍵。
 
-載入時：有效書籤 =（`bookmarks.json` ∪ localStorage `added`）− localStorage `removed`。localStorage 鍵名 `tmtp-bookmarks-v1`，只在撳星之後先寫。未撳過就跟檔案預設，四張卡會即時顯示實心星。之後喺檔案加新編號，只要冇被本機剔走过，都會自動出現。
+載入時：有效書籤 =（`bookmarks.json` ∪ localStorage `added`）− localStorage `removed`。localStorage 鍵名 `tmtp-bookmarks-v1`，只在撳星之後先寫。未撳過就跟檔案預設，五張卡會即時顯示實心星。之後喺檔案加新編號，只要冇被本機剔走过，都會自動出現。
 
 每張卡有星掣。篩選列有「書籤」，只顯示已加星嘅卡。已經唔喺 `listings.json` 嘅鍵會顯示「已下架書籤」。
 
@@ -72,7 +72,7 @@ git push origin main
 
 主列表、中位數、屋苑／房數／來源計數只保留已知租金而且 ≤ HK$14,001 嘅卡。未知、0、或高過 14001 嘅盤唔會出現喺主列表。而家呢份資料冇未知租金。
 
-`refresh.py` 寫 `listings.json` 時用同一條規則（`meta.rent_cap_hkd`、`meta.excluded_over_cap`）。如果一個書籤高過上限，因為佢喺 `bookmarks.json`，資料會保留佢，但主列表仍然唔顯示；開「書籤」先見到，並標「超出預算」。CEA208（HK$13,500）、CFE131（HK$13,000）、CGH466（HK$12,500）、CIK891（HK$12,500）都未超過上限。
+`refresh.py` 寫 `listings.json` 時用同一條規則（`meta.rent_cap_hkd`、`meta.excluded_over_cap`）。如果一個書籤高過上限，因為佢喺 `bookmarks.json`，資料會保留佢，但主列表仍然唔顯示；開「書籤」先見到，並標「超出預算」。CEA208（HK$13,500）、CFE131（HK$13,000）、CGH466（HK$12,500）、CIK891（HK$12,500）、CGB713（HK$12,000）都未超過上限。
 
 ## 抓取頻率
 

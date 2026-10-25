@@ -1,6 +1,6 @@
 """Refresh active rental listings for 屯門市廣場 + 屯門時代廣場 into data/listings.json.
 
-Sources: 28hse, Midland Realty, Centaline, Ricacorp (利嘉閣). Stdlib only.
+Sources: Midland Realty (美聯物業) and Centaline (中原地產) only. Stdlib only.
 index.html fetches data/listings.json; this script does not rewrite the page
 or data/bookmarks.json.
 
@@ -41,7 +41,6 @@ ESTATES: list[dict[str, Any]] = [
         "name": "屯門市廣場",
         "short": "市廣場",
         "exclude_block_8": True,
-        "hse28_url": "https://www.28hse.com/rent/a3/dg48/c4433",
         "midland_est_id": "E00091",
         "midland_list_url": (
             "https://www.midland.com.hk/zh-hk/list/rent/"
@@ -52,18 +51,12 @@ ESTATES: list[dict[str, Any]] = [
             "https://hk.centanet.com/findproperty/list/rent/"
             "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4_3-NXLIIHSSHT"
         ),
-        "ricacorp_url": (
-            "https://www.ricacorp.com/zh-hk/property/list/rent/"
-            "%E5%B1%AF%E9%96%80%E5%B8%82%E5%BB%A3%E5%A0%B4-bigest-"
-            "%E5%B1%AF%E9%96%80%E5%B8%82%E4%B8%AD%E5%BF%83-hma-hk"
-        ),
     },
     {
         "id": "trend-plaza",
         "name": "屯門時代廣場",
         "short": "時代廣場",
         "exclude_block_8": False,
-        "hse28_url": "https://www.28hse.com/rent/a3/dg48/c4458",
         "midland_est_id": "E00496",
         "midland_list_url": (
             "https://www.midland.com.hk/zh-hk/list/rent/"
@@ -73,10 +66,6 @@ ESTATES: list[dict[str, Any]] = [
         "centanet_list_url": (
             "https://hk.centanet.com/findproperty/list/rent/"
             "%E6%99%82%E4%BB%A3%E5%BB%A3%E5%A0%B4_2-BGKEBPYEPS"
-        ),
-        "ricacorp_url": (
-            "https://www.ricacorp.com/zh-hk/property/list/rent/"
-            + urllib.parse.quote("時代廣場-estate-屯門市中心-hma-hk")
         ),
     },
 ]
@@ -229,19 +218,6 @@ def pick_bound(values: list[object], *, latest: bool) -> str | None:
     return max(present) if latest else min(present)
 
 
-def dates_28hse(url: str) -> tuple[str | None, str | None]:
-    status, body, _ = fetch(url, headers={"Accept-Language": "zh-HK"})
-    if status != 200 or not body:
-        return None, None
-    text = body.decode("utf-8", "replace")
-    published = re.search(r'"datePublished"\s*:\s*"([^"]+)"', text)
-    updated = re.search(r'"dateModified"\s*:\s*"([^"]+)"', text)
-    return (
-        normalize_dt(published.group(1) if published else None),
-        normalize_dt(updated.group(1) if updated else None),
-    )
-
-
 def published_at_midland(url: str) -> str | None:
     status, body, _ = fetch(url, headers={"Accept-Language": "zh-HK"})
     if status != 200 or not body:
@@ -264,77 +240,6 @@ def published_at_midland(url: str) -> str | None:
     if not isinstance(detail, dict):
         return None
     return normalize_dt(detail.get("first_pub_date"))
-
-
-def parse_28hse(estate: dict[str, Any]) -> list[dict]:
-    estate_name = str(estate["name"])
-    status, body, _ = fetch(str(estate["hse28_url"]))
-    if status != 200:
-        raise RuntimeError(f"28hse HTTP {status} ({estate_name})")
-    text = body.decode("utf-8", errors="replace")
-    count_match = re.search(r"共有\s*(\d+)\s*個放租樓盤", text)
-    declared = int(count_match.group(1)) if count_match else None
-    parts = text.split('<div class="item property_item "')[1:]
-    listings: list[dict] = []
-    for part in parts:
-        url_match = re.search(r'href="(https://www\.28hse\.com/rent/apartment/property-(\d+))"', part)
-        if not url_match:
-            continue
-        img_match = re.search(r'https://i\d\.28hse\.com/[^"\s]+', part)
-        rent_match = re.search(r"租\s*\$\s*([\d,]+)\s*元", part)
-        plain = re.sub(r"<[^>]+>", "\n", part)
-        lines = [re.sub(r"\s+", " ", line).strip() for line in plain.splitlines()]
-        lines = [line for line in lines if line and line not in {"|", ">"}]
-        address = next((line for line in lines if re.search(r"\d+座", line)), "")
-        skip = re.compile(r"^(租\s*\$[\d,]+\s*元|\d+|置頂|黃金|屯門|屯門市廣場|私人屋苑|信和|美聯物業|實用面積:.*|@[\d.]+\s*元)$")
-        candidates = [line for line in lines if not skip.match(line) and "平方" not in line]
-        room_only = re.compile(r"^\d+\s*房(\s*,\s*\d+\s*浴室)?$")
-        titled = [
-            line
-            for line in candidates
-            if ("房" in line or "盤" in line or "租" in line) and not room_only.match(line)
-        ]
-        title = (titled[0] if titled else "") or f"{estate_name} {address}".strip()
-        bedrooms, room = room_from_text(" ".join(lines))
-        image = img_match.group(0) if img_match else ""
-        if image.endswith("_thumb.jpg"):
-            image = image.replace("_thumb.jpg", "_large.jpg")
-        rent = int(rent_match.group(1).replace(",", "")) if rent_match else None
-        area_match = re.search(r"實用面積\s*[:：]?\s*([\d,]+)\s*呎", plain)
-        if not area_match:
-            area_match = re.search(r"實用面積\s*[:：]?\s*([\d,]+)\s*呎", part)
-        area = saleable_sqft(area_match.group(1) if area_match else None)
-        detail_url = url_match.group(1)
-        published_at = None
-        updated_at = None
-        try:
-            published_at, updated_at = dates_28hse(detail_url)
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
-            print(f"28hse date {url_match.group(2)}: {exc}", flush=True)
-        time.sleep(0.25)
-        listings.append(
-            {
-                "source": "28hse",
-                "source_name": "28Hse",
-                "estate": estate_name,
-                "listing_id": url_match.group(2),
-                "title": title or f"{estate_name} {address}".strip(),
-                "address": address,
-                "rent_hkd": rent,
-                "area_sqft": area,
-                "rent_per_sqft": rent_per_sqft(rent, area),
-                "room_type": room,
-                "bedrooms": bedrooms,
-                "image_remote": image,
-                "url": detail_url,
-                "published_at": published_at,
-                "updated_at": updated_at,
-                "scraped_at": SCRAPED_AT,
-            }
-        )
-    if declared is not None and len(listings) != declared:
-        print(f"28hse {estate_name} declared {declared}, parsed {len(listings)}")
-    return listings
 
 
 def midland_token() -> str:
@@ -569,168 +474,6 @@ def exclude_tmtp_block_8(listings: list[dict]) -> tuple[list[dict], int]:
             continue
         kept.append(listing)
     return kept, removed
-
-
-def _rica_transfer_state(html: str) -> dict | None:
-    match = re.search(r"(\{&q;LAZYIMGUNIVERSAL_SERVERKEY_logo-icon.*)", html, re.S)
-    if not match:
-        return None
-    decoded = (
-        match.group(1)
-        .replace("&q;", '"')
-        .replace("&a;", "&")
-        .replace("&s;", "'")
-        .replace("&l;", "<")
-        .replace("&g;", ">")
-    )
-    try:
-        payload, _end = json.JSONDecoder().raw_decode(decoded)
-    except json.JSONDecodeError:
-        return None
-    return payload if isinstance(payload, dict) else None
-
-
-def _rica_ad_dates(html: str) -> dict[str, str]:
-    """Map postNo -> published_at (HKT) from 廣告日期 on the list page."""
-    out: dict[str, str] = {}
-    pattern = re.compile(
-        r"廣告日期</span><span[^>]*>\s*(\d{2}/\d{2}/\d{4})\s*</span>.*?"
-        r"物業編號</span><span[^>]*>\s*([A-Z]{2}\d{8})",
-        re.S,
-    )
-    for match in pattern.finditer(html):
-        day, month, year = match.group(1).split("/")
-        out[match.group(2)] = normalize_dt(f"{year}-{month}-{day}T00:00:00+08:00")
-    return out
-
-
-def _rica_ms_to_iso(value: object) -> str | None:
-    if isinstance(value, (int, float)) and value > 0:
-        try:
-            return (
-                datetime.fromtimestamp(value / 1000, tz=timezone.utc)
-                .astimezone(HKT)
-                .replace(microsecond=0)
-                .isoformat()
-            )
-        except (OverflowError, OSError, ValueError):
-            return None
-    return None
-
-
-def _rica_flat(raw: object) -> str:
-    if not isinstance(raw, str) or not raw.strip():
-        return ""
-    match = re.search(r"([A-Za-z])\s*$", raw.strip()) or re.search(r"Flat\s*([A-Za-z])", raw, re.I)
-    if match:
-        return f"{match.group(1).upper()}室"
-    return raw.strip()
-
-
-def parse_ricacorp(estate: dict[str, Any]) -> list[dict]:
-    """Scrape Ricacorp SSR transfer-state for one estate."""
-    estate_name = str(estate["name"])
-    list_url = str(estate["ricacorp_url"])
-    status, body, _ = fetch_with_retries(
-        list_url,
-        headers={"Accept-Language": "zh-HK", "Accept": "text/html"},
-    )
-    if status != 200 or not body:
-        raise RuntimeError(f"Ricacorp HTTP {status} ({estate_name})")
-    html = body.decode("utf-8", "replace")
-    state = _rica_transfer_state(html)
-    if not state:
-        raise RuntimeError("Ricacorp transfer-state missing")
-    rows = state.get("POSTS") or []
-    if not isinstance(rows, list):
-        raise RuntimeError("Ricacorp POSTS missing")
-    total = state.get("POSTSTOTAL")
-    ad_dates = _rica_ad_dates(html)
-    listings: list[dict] = []
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        rent = row.get("marketPrice")
-        if not isinstance(rent, int) or rent <= 0:
-            continue
-        # agreementType 5 = rent on Ricacorp; skip sale if mixed
-        agreement = str(row.get("agreementType") or "")
-        if agreement and agreement not in {"5", "rent", "Rent"}:
-            # still accept when marketPrice present and alias ends with -5-hk
-            alias = str(row.get("aliasV4") or row.get("alias") or "")
-            if "-5-hk" not in alias and "-5-" not in alias:
-                continue
-        post_no = str(row.get("postNo") or row.get("id") or "")
-        if not post_no:
-            continue
-        display = (
-            row.get("displayTextHk")
-            or row.get("displayText")
-            or estate_name
-        )
-        floor = str(row.get("floorZoneText") or "").strip()
-        flat = _rica_flat(row.get("flatZoneTextEn"))
-        loc = row.get("publicLocationNamesHk") or []
-        building = ""
-        phase = ""
-        if isinstance(loc, list) and loc:
-            for part in loc:
-                if not isinstance(part, str):
-                    continue
-                if re.search(r"(?:\d+|[A-Za-z])\s*座", part):
-                    building = part.strip()
-                phase_match = re.search(r"(\d+\s*期)", part)
-                if phase_match:
-                    phase = phase_match.group(1)
-        address = " ".join(
-            part for part in [phase, building or "", floor, flat] if part
-        ).strip()
-        if not address:
-            address = str(display)
-            for label in (estate_name, "時代廣場", "屯門市廣場"):
-                address = address.replace(label, "")
-            address = address.strip()
-        bedrooms = row.get("room") if isinstance(row.get("room"), int) else None
-        area = saleable_sqft(row.get("saleableArea"))
-        alias = str(row.get("aliasV4") or row.get("alias") or "")
-        detail_url = (
-            f"https://www.ricacorp.com/zh-hk/property/detail/{urllib.parse.quote(alias, safe='-._~')}"
-            if alias
-            else list_url
-        )
-        image = (
-            row.get("thumbnailDesktop")
-            or row.get("thumbnail")
-            or row.get("thumbnailMobile")
-            or ""
-        )
-        if isinstance(image, str) and " " in image:
-            image = image.split()[0]
-        listings.append(
-            {
-                "source": "ricacorp",
-                "source_name": "利嘉閣",
-                "estate": estate_name,
-                "listing_id": post_no,
-                "title": str(display).strip() or estate_name,
-                "address": address,
-                "rent_hkd": rent,
-                "area_sqft": area,
-                "rent_per_sqft": rent_per_sqft(rent, area),
-                "room_type": room_label(bedrooms),
-                "bedrooms": bedrooms,
-                "image_remote": image if isinstance(image, str) else "",
-                "url": detail_url,
-                "published_at": ad_dates.get(post_no),
-                "updated_at": _rica_ms_to_iso(row.get("overallDateModified")),
-                "scraped_at": SCRAPED_AT,
-            }
-        )
-    if total is not None and int(total) != len(rows):
-        print(f"ricacorp {estate_name} declared {total}, rows {len(rows)}", flush=True)
-    if state.get("POSTSHASMORE"):
-        print(f"ricacorp {estate_name} has more pages; only first SSR page scraped", flush=True)
-    return listings
 
 
 def unit_key(listing: dict) -> str | None:
@@ -993,11 +736,6 @@ def write_data(
             ],
             "sources": [
                 {
-                    "id": "28hse",
-                    "name": "28Hse",
-                    "url": ESTATES[0]["hse28_url"],
-                },
-                {
                     "id": "midland",
                     "name": "美聯物業",
                     "url": ESTATES[0]["midland_list_url"],
@@ -1006,11 +744,6 @@ def write_data(
                     "id": "centanet",
                     "name": "中原地產",
                     "url": ESTATES[0]["centanet_list_url"],
-                },
-                {
-                    "id": "ricacorp",
-                    "name": "利嘉閣",
-                    "url": ESTATES[0]["ricacorp_url"],
                 },
             ],
         },
@@ -1024,10 +757,8 @@ def main() -> None:
     errors: list[str] = []
     collected: list[dict] = []
     parsers = (
-        ("28hse", parse_28hse),
         ("midland", parse_midland),
         ("centanet", parse_centanet),
-        ("ricacorp", parse_ricacorp),
     )
     for estate in ESTATES:
         estate_name = str(estate["name"])
@@ -1064,7 +795,7 @@ def main() -> None:
         f"tmtp_block8_removed {removed_block8 + removed_after}"
     )
     print(f"estate_counts {estate_counts(listings)}", flush=True)
-    for source in ("28hse", "midland", "centanet", "ricacorp"):
+    for source in ("midland", "centanet"):
         rows = [item for item in listings if item.get("source") == source]
         published = sum(1 for item in rows if item.get("published_at"))
         updated = sum(1 for item in rows if item.get("updated_at"))

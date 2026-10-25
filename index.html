@@ -40,8 +40,6 @@ img, .ph { width:100%; height:170px; object-fit:cover; background:#e7e5e4; displ
 .badge { display:inline-block; font-size:12px; line-height:1.4; border-radius:999px; padding:2px 8px; color:#fff; background:#57534e; vertical-align:middle; }
 .badge.src-midland { background:#a16207; }
 .badge.src-centanet { background:#d0121a; }
-.badge.src-28hse { background:#0f766e; }
-.badge.src-ricacorp { background:#1e40af; }
 .badge.estate { background:#44403c; font-weight: 500; }
 a.cardlink { color: inherit; text-decoration: none; }
 a.more, a.source { color:#9a3412; font-size:13px; }
@@ -89,7 +87,7 @@ button.star.on { background: #fffbeb; color: #b45309; border-color: #d97706; }
 <p class="status" id="status" hidden></p>
 <main id="grid"></main>
 <script>
-const SOURCE_ORDER = ["28Hse", "美聯物業", "中原地產", "利嘉閣"];
+const SOURCE_ORDER = ["美聯物業", "中原地產"];
 const ESTATE_ORDER = ["屯門市廣場", "屯門時代廣場"];
 const ESTATE_SHORT = {
   "屯門市廣場": "市廣場",
@@ -156,8 +154,6 @@ function estateLabel(name) {
 function sourceClass(name) {
   if (name === "美聯物業" || name === "美聯" || name === "Midland") return "src-midland";
   if (name === "中原地產" || name === "中原" || name === "Centaline") return "src-centanet";
-  if (name === "28Hse" || name === "28hse") return "src-28hse";
-  if (name === "利嘉閣" || name === "Ricacorp" || name === "ricacorp") return "src-ricacorp";
   return "";
 }
 
@@ -173,10 +169,8 @@ function hostLabel(url, index) {
   } catch {
     host = "";
   }
-  if (host === "28hse.com" || host.endsWith(".28hse.com")) return "28hse.com";
   if (host === "midland.com.hk" || host.endsWith(".midland.com.hk")) return "midland.com.hk";
   if (host === "centanet.com" || host.endsWith(".centanet.com")) return "centanet.com";
-  if (host === "ricacorp.com" || host.endsWith(".ricacorp.com")) return "ricacorp.com";
   if (host) return host;
   return "連結 " + (index + 1);
 }
